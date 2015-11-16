@@ -19,7 +19,7 @@ class AdminController extends Controller {
         $breadcrumbs->addItem("Home", $this->get("router")->generate("lt_photos_index"));
         $breadcrumbs->addItem("$year1-$year2", $this->get("router")->generate("lt_photos_year", array('year1' => $year1, 'year2' => $year2)));
         $breadcrumbs->addItem($event->getName(), $this->get("router")->generate("lt_photos_photograph", array('year1' => $year1, 'year2' => $year2, 'slug' => $event->getSlug())));
-        if ($category != null)
+        if ($category !== null)
             $breadcrumbs->addItem($category->getName());
 
         return $this->render('LTPhotosBundle:Admin:gallery.html.twig', array('photos' => $photos, 'photographs' => $event->getPhotographs()));

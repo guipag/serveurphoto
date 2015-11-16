@@ -52,7 +52,7 @@ class ImportCommand extends ContainerAwareCommand {
 	    $repoEvent = $em->getRepository('LTPhotosBundle:Event');
 	    $event = $repoEvent->findOneBy(array('name' => $name, 'date' => $date));
 
-	    if ($event == null) {
+	    if ($event === null) {
 	        $event = new Event();
 	        $event->setDate($date);
 	        $event->setName($name);
@@ -72,7 +72,6 @@ class ImportCommand extends ContainerAwareCommand {
 			// /!\ l'event n'a donc pas le lien avec la catégorie ! J'ai l'impression qu'il y a une couille dans le pâté
 		    $event->addCategory($category);
 
-		    var_dump($cat);
 		} else {
 		    //c'est un dossier de photo ou de vidéo
 		    if (preg_match('#^(Photos?)#isU', $cat->getFileName())) {
@@ -81,7 +80,7 @@ class ImportCommand extends ContainerAwareCommand {
 			$repoPhotograph = $em->getRepository('LTPhotosBundle:Photograph');
 			$photograph = $repoPhotograph->findOneByName($namePhotograph);
 
-			if ($photograph == null) {
+			if ($photograph === null) {
 			    $photograph = new Photograph();
 			    $photograph->setName($namePhotograph);
 			    $photograph->setFirstname($namePhotograph);

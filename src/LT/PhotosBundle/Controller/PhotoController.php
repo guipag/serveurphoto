@@ -60,7 +60,7 @@ class PhotoController extends Controller {
         $event = $repository->findOneBy(array('slug' => $eventSlug));
         $photo = new Photo();
 
-	if ($categorySlug != null) {
+	if ($categorySlug !== null) {
 	    $repository = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Category');
 	    $category = $repository->findOneBy(array('slug' => $categorySlug));
 	}
@@ -72,9 +72,8 @@ class PhotoController extends Controller {
         $form->handleRequest($request);
 
         if ($request->isXmlHttpRequest()) {
-var_dump($request->files->get('file'));
             $data = $form->getData();
-var_dump($request->get('tags'));
+
             $photograph = $this->getUser()->getPhotograph();
             $em = $this->getDoctrine()->getManager();
 	    $photos = array();
@@ -83,12 +82,11 @@ var_dump($request->get('tags'));
                 $photos[] = new Photo();
 		$photo = end($photos);
 //var_dump($file[0]);
-var_dump($file);
                 $photo->setFile(reset($file));
                 $photo->setPhotograph($photograph);
                 $photo->setValid(false);
 
-		if ($categorySlug != null)
+		if ($categorySlug !== null)
 		    $photo->setCategory($category);
 
                 $event->addPhoto($photo);
@@ -171,11 +169,11 @@ var_dump($file);
 
 	$name = '/var/www/photos/web/downloads/' . $event->getDate()->format('Y m d') . ' - ' . $event->getName();
 
-	if ($category != null) {
+	if ($category !== null) {
 	    $name .= ' - ';
 	    $name .= $category->getName();
 	}
-	if ($photograph != null) {
+	if ($photograph !== null) {
 	    $name .= ' - Photos de ';
 	    $name .= $photograph->getNickname();
 	}

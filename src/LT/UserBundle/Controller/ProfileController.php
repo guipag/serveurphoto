@@ -36,7 +36,7 @@ class ProfileController extends Controller
      */
     public function showAction(Request $request, User $user = null)
     {
-        if ($user == null)
+        if ($user === null)
             $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');

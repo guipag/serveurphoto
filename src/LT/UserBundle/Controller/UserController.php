@@ -125,7 +125,7 @@ class UserController extends Controller
 
         $editForm = $this->createEditForm($entity);
 	$editForm->remove('password');
-var_dump($editForm);
+
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('LTUserBundle:User:edit.html.twig', array(
