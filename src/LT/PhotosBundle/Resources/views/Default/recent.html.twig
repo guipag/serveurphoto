@@ -1,0 +1,42 @@
+{# src/LT/PhotosBundle/Resources.views/recent.html.twig #}
+
+{% extends "LTCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Récent{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+<style>
+.thumbnail {
+  min-height: 296px;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+
+<p>Vous trouverez ci-dessous les dernières photos ajoutées :</p>
+
+<div class="row">
+  {% for event in listEvents %}
+    <div class="col-sm-6 col-md-3">
+      <a href="{{ path('lt_photos_base') ~ scolarYear(event.date) ~ '/' ~ event.slug }}">      
+        <div class="thumbnail">
+          <img src="{{ asset(cover(event).getWebPath | imagine_filter('front_thumb')) }}" style="height: 180px; width: 100%; display:block;">
+          <div class="caption">
+            <h4>{{ event.name }}</h4>
+            <p>{{ event.date|date('d-m-Y') }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
+
+
+
+
+

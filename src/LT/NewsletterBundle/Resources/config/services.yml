@@ -1,0 +1,11 @@
+parameters:
+#    lt_newsletter.example.class: LT\NewsletterBundle\Example
+
+services:
+#    lt_newsletter.example:
+#        class: %lt_newsletter.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    lt_newsletter.manager:
+        class: LT\NewsletterBundle\Services\LTNewsletter
+        arguments: [@mailer]

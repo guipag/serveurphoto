@@ -1,0 +1,45 @@
+security:
+    encoders:
+        LT\UserBundle\Entity\User: sha512
+
+    role_hierarchy:
+        ROLE_PHOTOGRAPH:  [ROLE_USER]
+        ROLE_ADMIN:       [ROLE_USER, ROLE_MODERATEUR, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_PHOTOGRAPH, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        main:
+            entity: { class: LT\UserBundle\Entity\User, property: username }
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            pattern: ^/
+            anonymous: true
+            provider: main
+            form_login:
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+            logout:
+                path: fos_user_security_logout
+                target: /index
+            remember_me:
+                key: %secret%
+            switch_user: true
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/photograph/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/photograph/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/event/create, roles: ROLE_PHOTOGRAPH }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/bulk/delete/event, roles: ROLE_ADMIN }
+
+    acl:
+        connection: default
+

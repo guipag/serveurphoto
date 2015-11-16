@@ -1,0 +1,51 @@
+{% extends "LTCoreBundle::layout.html.twig" %}
+
+{% trans_default_domain 'SgDatatablesBundle' %}
+
+{% block title %}{{ parent() }} - Upload{% endblock %}
+
+{% block stylesheets %}
+
+{{ parent() }}
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.css">
+
+{% endblock %}
+
+{% block body %}
+<script type="text/javascript">
+$(document).ready(function() {
+  $.fn.dataTable.moment( 'HH:mm MMM D, YY' );
+  $.fn.dataTable.moment( 'dddd, MMMM Do, YYYY' );
+} );
+</script>
+  {{ datatable_render(datatable) }}
+
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+<script src="{{ asset('bundles/LTPhotos/js/moment-with-locales.min.js') }}"></script>
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/1.10.9/sorting/datetime-moment.js"></script>
+<script type="text/javascript" class="init">
+
+
+
+
+$(document).ready(function() {
+    var table = $('#event_datatable');
+ 
+    $('#event_datatable tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            $(".selected").removeClass('selected');
+            $(this).addClass('selected');
+        }
+    } );
+ 
+} );
+
+</script>
+{% endblock %}

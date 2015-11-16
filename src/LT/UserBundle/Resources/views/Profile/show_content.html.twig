@@ -1,0 +1,143 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<h3>Mon compte utilisateur</h3>
+<table class="table table-hover">
+  <tr>
+    <td>Id</td>
+    <td>{{ user.id }}</td>
+  </tr>
+  <tr>
+    <td>{{ 'profile.show.username'|trans }}</td>
+    <td>{{ user.username }}</td>
+  </tr>
+  <tr>
+    <td>{{ 'profile.show.email'|trans }}</td>
+    <td>{{ user.email }}</td>
+  </tr>
+  <tr>
+    <td>Droits</td>
+    <td>
+      {% for role in user.roles %}
+	['{{ role }}']
+      {% endfor %}
+    </td>
+  </tr>
+</table>
+
+{% if is_granted('ROLE_PHOTOGRAPH') %}
+<h3>Mon compte photographe</h3>
+<table class="table table-hover">
+  <tr>
+    <td>Id</td>
+    <td>{{ user.photograph.id }}</td>
+  </tr>
+  <tr>
+    <td>Nom</td>
+    <td>{{ user.photograph.name }}</td>
+  </tr>
+  <tr>
+    <td>Prénom</td>
+    <td>{{ user.photograph.firstname }}</td>
+  </tr>
+  <tr>
+    <td>Surnom</td>
+    <td>{{ user.photograph.nickname }}</td>
+  </tr>
+  <tr>
+    <td>Description</td>
+    <td>{{ user.photograph.description }}</td>
+  </tr>
+  <tr>
+    <td>Licence</td>
+    <td>{{ user.photograph.licence }}</td>
+  </tr>
+</table>
+{% endif %}
+
+<h3>Changer mon mot de passe</h3>
+
+<a class="btn btn-warning" href="{{ path('fos_user_change_password') }}">Changer mon mot de passe</a>
+
+{% if  not is_granted('ROLE_PHOTOGRAPH') %}
+<h3>Devenir photographe&nbsp;!</h3>
+
+<p>Si vous voulez poster des photos vous devez avoir un compte photographe. Ce compte vous permettra d'accéder aux pages d'upload de photos et de gestion des événements.</p>
+<p>Avec un compte photographe vous pourrez censurer vos photos directement en ligne sans passer par la modération. Ce qui permet plus de réactivité en cas de demande.</p>
+
+Pour étendre votre compte utilisateur en un compte photographe c'est par ici que ça se passe&nbsp;:
+
+<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Je suis un photographe !</button>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Ajout de l'extension photographe</h4>
+      </div>
+      <div class="modal-body">
+
+<form method="post" action="" class="form-horizontal">
+
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+        {{ form_label(form.name, "Nom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.name) }}
+            <div  class="col-sm-4">
+                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+            </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.firstname, "Prénom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.firstname) }}
+            <div  class="col-sm-4">
+                {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+            </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.nickname, "Nom de photographe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.nickname) }}
+            <div  class="col-sm-4">
+                {{ form_widget(form.nickname, {'attr': {'class': 'form-control'}}) }}
+            </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.description, "Parlez nous de vous (appareil photo, objectifs, ...)", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.description) }}
+            <div  class="col-sm-4">
+                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+            </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.licence, "Licence des photos", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.licence) }}
+        <div class="col-sm-4">
+             {{ form_widget(form.licence, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+        {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
+
+
+
+
+{% endif %}

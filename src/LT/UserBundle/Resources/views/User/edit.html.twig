@@ -1,0 +1,66 @@
+{% extends 'LTCoreBundle::layout.html.twig' %}
+
+{% block body -%}
+
+<h3>Modifier l'utilisateur</h3>
+
+<div class="well">
+  {{ form_start(edit_form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {{ form_errors(edit_form) }}
+
+  <div class="form-group">
+    {{ form_label(edit_form.username, "Nom d'utilisateur", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+    {{ form_errors(edit_form.username) }}
+
+    <div class="col-sm-4">
+      {{ form_widget(edit_form.username, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.email, "E-mail", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+    {{ form_errors(edit_form.email) }}
+
+    <div class="col-sm-4">
+      {{ form_widget(edit_form.email, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.password.first, "Mot de passe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+    {{ form_errors(edit_form.password.first) }}
+
+    <div class="col-sm-4">
+      {{ form_widget(edit_form.password.first, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    {{ form_label(edit_form.password.second, "Vérification", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+    {{ form_errors(edit_form.password.second) }}
+
+    <div class="col-sm-4">
+      {{ form_widget(edit_form.password.second, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  {{ form_rest(edit_form) }}
+
+  {{ form_end(edit_form) }}
+</div>
+
+
+<h3>Supprimer l'utilisateur</h3>
+{{ form_start(delete_form) }}
+
+{{ form_widget(delete_form.submit, {'attr': {'class': 'btn btn-danger'}}) }}
+
+{{ form_rest(delete_form) }}
+{{ form_end(delete_form) }}
+
+ <a href="{{ path('user') }}">
+            Back to the list
+        </a>
+
+{% endblock %}

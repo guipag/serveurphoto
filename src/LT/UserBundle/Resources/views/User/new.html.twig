@@ -1,0 +1,57 @@
+{% extends 'LTUserBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h1>User creation</h1>
+
+<div class="well">
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {{ form_errors(form) }}
+
+  <div class="form-group">
+    {{ form_label(form.username, "Nom d'utilisateur", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+    {{ form_errors(form.username) }}
+
+    <div class="col-sm-4">
+      {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.email, "E-mail", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+    {{ form_errors(form.email) }}
+
+    <div class="col-sm-4">
+      {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.password, "Mot de passe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+    {{ form_errors(form.password) }}
+
+    <div class="col-sm-4">
+      {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+
+
+
+  {{ form_rest(form) }}
+
+  {{ form_end(form) }}
+
+</div>
+
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('user') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

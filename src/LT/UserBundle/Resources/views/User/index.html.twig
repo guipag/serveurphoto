@@ -1,0 +1,45 @@
+{% extends 'LTCoreBundle::layout.html.twig' %}
+
+{% block body %}
+
+<div class="well">
+  <form id="form_recherche" action="{{ path('lt_photos_search_events') }}" method="post">
+    <div class="input-group">
+      <input type="text" class="form-control" id="user" name="user" placeholder="Rechercher...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">Go !</button>
+      </span>
+    </div>
+  </form>
+
+  <br />
+
+  <div class="loading"></div>
+    <div id="resultats_recherche">
+      {% include 'LTUserBundle:User:listUser.html.twig' with {'entities' : entities}  %}
+    </div>
+  </div>
+</div>
+
+
+<script>
+$(".loading").hide();
+$("#form_recherche").submit(function(){
+    $(".loading").show();
+    var motcle = $("#user").val();
+    var DATA = 'motcle=' + motcle;
+    $.ajax({
+        type: "POST",
+        url: "/app_dev.php/admin/user/search",
+        data: DATA,
+        cache: false,
+        success: function(data){
+           $('#resultats_recherche').html(data);
+           $(".loading").hide();
+        }
+    });
+    return false;
+});
+</script>
+
+{% endblock %}

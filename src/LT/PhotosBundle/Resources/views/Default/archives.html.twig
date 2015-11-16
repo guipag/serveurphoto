@@ -1,0 +1,22 @@
+{# src/LT/PhotosBundle/Resources/views/archives.html.twig #}
+
+{% extends "LTCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Archives{% endblock %}
+
+{% block body %}
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Choisissez l'année : </h3>
+  </div>
+  <div class="list-group">
+    {% for year in years %}
+      <a href="{{ path('lt_photos_base') ~ year }}" class="list-group-item">
+        {{ year }}
+        <span class="badge"></span>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+<?php
+
+namespace LT\PhotosBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use LT\PhotosBundle\Entity\Photo;
+use LT\PhotosBundle\Entity\FormContact;
+
+class DefaultController extends Controller
+{
+    public function indexAction()
+    {
+        return $this->render('LTPhotosBundle:Default:index.html.twig');
+    }
+
+    public function recentAction() {
+	$repository = $this
+	  ->getDoctrine()
+	  ->getManager()
+	  ->getRepository('LTPhotosBundle:Event')
+	;
+
+	$listEvents = $repository->findBy(
+	  array(), // Critere
+	  array('date' => 'desc'),        // Tri
+	  10,                              // Limite
+	  0                               // Offset
+	);
+
+	return $this->render('LTPhotosBundle:Default:recent.html.twig', array('listEvents' => $listEvents));
+    }
+
+    public function yearAction($year1, $year2) {
+	$repository = $this
+	  ->getDoctrine()
+	  ->getManager()
+	  ->getRepository('LTPhotosBundle:Event')
+	;
+
+	$listEvents = $repository->findByScolarYear($year1, $year2);
+
+	return $this->render('LTPhotosBundle:Default:year.html.twig', array('listEvents' => $listEvents));
+    }
+
+    public function eventAction() {
+	$repository = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Event');
+
+	$listEvents = $repository->findThisYear();
+
+	return $this->render('LTPhotosBundle:Default:photos.html.twig', array('listEvents' => $listEvents));
+    }
+
+    public function archivesAction() {
+	$repository = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Event');
+	$firstEvent = $repositori->find
+	return $this->render('LTPhotosBundle:Default:archives.html.twig', array('firstYear' => $firstYear));
+    }
+
+    public function photographAction($year1, $year2, $slug) {
+	return 0;
+    }
+
+    public function galleryAction($year1, $year2, $slug, $photograph) {
+	return 0;
+    }
+
+    public function contactAction(Request $request) {
+	$formcontact = new FormContact();
+	$formBuilder = $this->get('form.factory')->createBuilder('form', $formcontact);
+
+	$formBuilder
+	  ->add('name', 'text')
+	  ->add('mail', 'text')
+	  ->add('object', 'text')
+	  ->add('content', 'textarea')
+	  ->add('send', 'submit')
+	;
+
+	$form = $formBuilder->getForm();
+	
+	$form->handleRequest($request);
+
+	if ($form->isValid()) {
+	    //envoyer le mail
+	    $request->getSession()->getFlashBag()->add('notice', 'Le message a bien été envoyé.');
+	}
+
+	return $this->render('LTPhotosBundle:Default:contact.html.twig', array('form' => $form->createView(),));
+    }
+}

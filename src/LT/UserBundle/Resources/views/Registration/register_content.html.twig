@@ -1,0 +1,60 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<p>Pour vous inscrire vous devez avoir une adresse e-mail valide se terminant en @crans.org ou @ens-cachan.fr.</p>
+
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="well fos_user_registration_register form-horizontal">
+<legend>Créer votre compte maintenant !</legend>
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+      {{ form_label(form.email, "E-mail", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_errors(form.email) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      {{ form_label(form.username, "Nom d'utilisateur", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_errors(form.username) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      {{ form_label(form.plainPassword.first, "Mot de passe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_errors(form.plainPassword.first) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      {{ form_label(form.plainPassword.second, "Confirmation", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_errors(form.plainPassword.second) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      {{ form_widget(form.followed, {'attr': {'class': 'col-sm-3'}}) }}
+
+      <div class="col-sm-4">
+        {{ form_label(form.followed, "Recevoir les notifications de mise en ligne par mail", {'label_attr': {'class': 'control-label'}}) }}
+      </div>
+    </div>
+
+    {{ form_rest(form) }}
+    
+    <div>
+        <input type="submit" class="btn btn-primary" value="{{ 'registration.submit'|trans }}" />
+    </div>
+</form>
+
+

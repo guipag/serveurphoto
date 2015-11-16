@@ -1,0 +1,37 @@
+{# src/LT/PhotosBundle/Resources/views/year.html.twig #}
+
+{% extends "LTCoreBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+<style>
+.thumbnail {
+  min-height: 296px;
+}
+</style>
+{% endblock %}
+
+{% block title %}{{ parent() }} - Archives{% endblock %}
+
+{% block body %}
+
+{{ wo_render_breadcrumbs() }}
+
+<div class="row">
+{% for event in listEvents %}
+  <div class="col-sm-3 col-nd-3">
+    <a href="{{ app.request.uri ~ '/' ~ event.slug }}">
+      <div class="thumbnail">
+        <img src="{{ asset(cover(event).getWebPath | imagine_filter('front_thumb')) }}" class="img-responsive" style="height: 180px; width: 100%; display:block;">
+        <div class="caption">
+          <h4>{{ event.name }}</h4>
+          <p>{{ event.date|date("d/m/Y") }}</p>
+        </div>
+      </div>
+    </a>
+  </div>
+{% endfor %}
+</div>
+
+{% endblock %}

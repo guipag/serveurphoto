@@ -1,0 +1,7 @@
+parameters:
+#    lt_core.example.class: LT\CoreBundle\Example
+
+services:
+#    lt_core.example:
+#        class: %lt_core.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

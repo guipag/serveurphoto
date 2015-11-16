@@ -1,0 +1,118 @@
+{# LTPHotosBundle:Default:uploadPhotos.html.twig #}
+
+{% extends "LTPhotosBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+<style>
+#file {
+  display: none;
+}
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="well">
+  <form id="formupload" action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+    <span id="fileuploadbutton" class="btn btn-success fileinput-button">
+      <i class="glyphicon glyphicon-plus"></i>
+      <span>Ajouter des photos</span>
+      <input id="file" type="file" multiple />
+    </span>
+    <button type="submit" class="btn btn-primary">
+      <i class="glyphicon glyphicon-upload"></i>
+      <span>Télécharger</span>
+    </button>
+    <button type="reset" class="btn btn-warning">
+      <i class="glyphicon glyphicon-ban-circle"></i>
+      <span>Annuler</span>
+    </button>
+    <span class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      <span>Supprimer</span>
+    </span>
+  </form>
+
+  <div id="prev"></div>
+
+
+</div>
+
+<script type="text/javascript">
+(function() {
+  function createThumbnail(file) {
+    var reader = new FileReader();
+
+    reader.addEventListener('load', function() {
+      var imgElement = document.createElement('img');
+      imgElement.style.maxWidth = '150px';
+      imgElement.style.maxHeight = '150px';
+      imgElement.src = this.result;
+      prev.appendChild(imgElement);
+    }, false);
+
+    reader.readAsDataURL(file);
+  }
+
+  var allowedTypes = ['png', 'jpg', 'jpeg', 'gif'],
+      fileInput = document.querySelector('#file'),
+      prev = document.querySelector('#prev');
+
+  fileInput.addEventListener('change', function(e) {
+    var files = e.target.files,
+        filesLen = files.length,
+        imgType;
+
+    for (var i = 0 ; i < filesLen ; i++) {
+      imgType = files[i].name.split('.');
+      imgType = imgType[imgType.length -1].toLowerCase();
+
+      if (allowedTypes.indexOf(imgType) != -1) {
+	createThumbnail(files[i]);
+      }
+    }
+  }, false);
+
+  var formup = document.getElementById("formupload");
+  formup.addEventListener('submit', function(e) {
+    var fileInput = document.querySelector('#file');
+    var files = fileInput.files;
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('POST', '#'); //mettre l'adresse de la gestion du form
+
+    xhr.addEventListener('load', function(e) {
+      alert('Upload terminé !');
+
+    var form = new FormData();
+
+    for (var i = 0 ; i < files.length ; i++) {
+
+    
+    }, false);
+alert(files.length);
+
+
+    e.preventDefault();
+  }, false);
+
+})();
+
+</script>
+
+<script type="text/javascript">
+
+var buttonFile = document.getElementById("fileuploadbutton"),
+    fileField  = document.getElementById("file");
+
+buttonFile.addEventListener('click', function(e) {
+  fileField.click();
+}, false);
+
+
+</script>
+
+{% endblock %}

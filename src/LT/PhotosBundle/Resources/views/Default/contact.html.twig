@@ -1,0 +1,57 @@
+{# src/LT/PhotosBundle/Resources.views/recent.html.twig #}
+
+{% extends "LTCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Récent{% endblock %}
+
+{% block body %}
+<p>Pour contacter l'équipe utilisez le formulaire ci-dessous, nous vous recontacterons dans les meilleurs delais. Si c'est pour une demande de censure mettez "CENSURE" en objet du mail pour qu'il soit traité le plus rapidement possible.</p>
+<h3>Formulaire de contact</h3>
+
+<div class="well">
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+      {{ form_label(form.name, "Nom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_errors(form.name) }}
+      <div class="col-sm-4">
+        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      {{ form_label(form.mail, "Mail", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_errors(form.mail) }}
+      <div class="col-sm-4">
+        {{ form_widget(form.mail, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+    
+    <div class="form-group">
+	{{ form_label(form.object, "Objet", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+	{{ form_errors(form.object) }}
+	<div class="col-sm-4">
+	  {{ form_widget(form.object, {'attr': {'class': 'form-control'}} ) }}
+	</div>
+    </div>
+
+    <div class="form-group">
+	{{form_label(form.content, "Message", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+	{{ form_errors(form.content) }}
+	<div class="col-sm-4">
+	  {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+	</div>
+    </div>
+
+  {{ form_widget(form.send, {'attr': {'class': 'btn btn-primary'}}) }}
+
+  {{ form_rest(form) }}
+  
+  {{ form_end(form) }}
+</div>
+
+
+
+
+{% endblock %}

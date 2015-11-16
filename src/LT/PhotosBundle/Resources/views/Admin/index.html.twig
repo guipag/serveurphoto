@@ -1,0 +1,12 @@
+{% extends "LTCoreBundle::layout.html.twig" %}
+
+{% block body %}
+
+<h3>Bienvenue sur la partie administration !</h3>
+
+<p>CI-dessous les différentes rubriques accessibles :</p>
+<ul>
+<li><a href="{{ path('event') }}">Gestion des évènements</a></li>
+<li><a href="{{ path('photograph') }}">Gestion des photographes</a></li>
+</ul>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'LTCoreBundle::layout.html.twig' %}
+
+{% block body -%}
+    <a href="{{ path('photograph') }}">
+	<- retourner à la liste
+    </a>
+
+    <h3>Edition du photographe</h3>
+
+<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Editer le photographe
+</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+</div>
+<div class="modal-body">
+<div class="well">
+{{ form_start(edit_form, {'attr': {'class': 'form-horizontal'}}) }}
+  {{ form_errors(edit_form) }}
+
+  <div class="form-group">
+      {{ form_label(edit_form.name, "Nom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {{ form_errors(edit_form.name) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(edit_form.name, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+  <div class="form-group">
+      {{ form_label(edit_form.firstname, "Prénom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {{ form_errors(edit_form.firstname) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(edit_form.firstname, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+  <div class="form-group">
+      {{ form_label(edit_form.nickname, "Surnom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {{ form_errors(edit_form.nickname) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(edit_form.nickname, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+  <div class="form-group">
+      {{ form_label(edit_form.description, "Description", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {{ form_errors(edit_form.description) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(edit_form.description, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+
+  <div class="form-group">
+      {{ form_label(edit_form.user.email, "E-mail", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {{ form_errors(edit_form.user.email) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(edit_form.user.email, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+  <div class="form-group">
+      {{ form_label(edit_form.user.username, "Nom d'utilisateur", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {{ form_errors(edit_form.user.username) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(edit_form.user.username, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+
+  <div class="form-group">
+      {{ form_label(edit_form.user.plainPassword.first, "Mot de passe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {{ form_errors(edit_form.user.plainPassword.first) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(edit_form.user.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+  <div class="form-group">
+      {{ form_label(edit_form.user.plainPassword.second, "Confirmer mot de passe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {{ form_errors(edit_form.user.plainPassword.second) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(edit_form.user.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+  {{ form_widget(edit_form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+
+  {{ form_rest(edit_form) }}
+{{ form_end(edit_form) }}
+</div>
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<h3>Statistiques</h3>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <td>Evènement</td>
+      <td>Nombre de photos publiées</td>
+      <td>Nombre de photos censurées</td>
+      <td>Action</td>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for event in entity.getEvents %}
+      <tr>
+        <td>{{ event.name }}</td>
+        <td>{{ event.getPhotos|length }}</td>
+        <td>{{ nbrPhotosCensured[event.id] }}</td>
+        <td><a href="{{ path('event_edit', { 'id': event.id }) }}" class="btn btn-primary">Administrer <i class="glyphicon glyphicon-triangle-right"></i></a></td>
+      </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+<h3>Suspendre le compte</h3>
+
+
+<h3>Supprimer le photographe</h3>
+{{ form_start(delete_form) }}
+{{ form_widget(delete_form.submit, {'attr': {'class': 'btn btn-danger'}}) }}
+{{ form_rest(delete_form) }}
+{{ form_end(delete_form) }}
+
+
+{% endblock %}

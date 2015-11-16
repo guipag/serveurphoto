@@ -1,0 +1,163 @@
+lt_photos_base:
+    path:     /
+    methods: [ get ]
+    defaults: { _controller: LTPhotosBundle:Default:index }
+
+lt_photos_index:
+    path: /index
+    methods: [ get ]
+    defaults: { _controller: LTPhotosBundle:Default:index }
+
+lt_photos_recent:
+    path: /recent
+    methods: [ get ]
+    defaults: { _controller: LTPhotosBundle:Default:recent }
+
+lt_photos_event:
+    path: /event
+    methods: [ get ]
+    defaults: { _controller: LTPhotosBundle:Default:event }
+
+lt_photos_year:
+    path: /{year1}-{year2}
+    methods: [ get ]
+    defaults: { _controller: LTPhotosBundle:Default:year }
+    requirements:
+        year1: \d{4}
+        year2: \d{4}
+
+lt_photos_archives:
+    path: /archives
+    methods: [ get ]
+    defaults: {_controller: LTPhotosBundle:Default:archives }
+
+lt_photos_photograph:
+    path: /{year1}-{year2}/{slug}
+    methods: [ get ]
+    defaults: { _controller:LTPhotosBundle:Default:photograph }
+    requirements:
+        year1: \d{4}
+        year2: \d{4}
+
+lt_photos_category:
+    path: /{year1}-{year2}/{slug}/{slug_cat}/gallery/{photograph}
+    methods: [ get ]
+    defaults: { _controller:LTPhotosBundle:Default:gallery, photograph: null }
+    requirements:
+        year1: \d{4}
+        year2: \d{4}
+
+lt_photos_gallery_admin:
+    path: /admin/{year1}-{year2}/{slug}/gallery/{photograph}
+    methods: [ get, post ]
+    defaults: { _controller:LTPhotosBundle:Admin:gallery, photograph: null }
+    requirements:
+        year1: \d{4}
+        year2: \d{4}
+
+lt_photos_gallery:
+    path: /{year1}-{year2}/{slug}/gallery/{photograph}
+    methods: [ get ]
+    defaults: { _controller:LTPhotosBundle:Default:gallery, photograph: null }
+    requirements:
+        year1: \d{4}
+        year2: \d{4}
+
+lt_photos_contact:
+    path: /contact
+    methods: [ get, post ]
+    defaults: { _controller:LTCoreBundle:Default:contact }
+
+lt_photos_upload:
+    path: /upload
+    defaults: { _controller:LTPhotosBundle:Photo:upload }
+
+lt_photos_validimport:
+    path: /validimport/{eventSlug}
+    defaults: { _controller:LTPhotosBundle:Photo:validImport }
+
+lt_photos_help:
+    path: /help
+    defaults: { _controller:LTPhotosBundle:Photo:help }
+
+lt_photos_delete_photo:
+    path : /photo/delete/{photo}
+    defaults: { _controller:LTPhotosBundle:Photo:delete }
+    requirements:
+        photo: \d+
+
+lt_photos_censure_photo:
+    path: /photo/censure/{photo}
+    defaults: { _controller:LTPhotosBundle:Photo:censure }
+    requirements:
+        photo: \d+
+
+lt_photos_valid_photo:
+    path: /photo/valid/{photo}
+    defaults: { _controller:LTPhotosBundle:Photo:valid }
+    requirements:
+        photo: \d+
+
+LTPhotosBundle_admin:
+    resource: "@LTPhotosBundle/Resources/config/routing/admin.yml"
+    prefix: /admin
+
+LTPhotosBundle_event:
+    resource: "@LTPhotosBundle/Resources/config/routing/event.yml"
+    prefix:   /admin/event
+
+LTPhotosBundle_photograph:
+    resource: "@LTPhotosBundle/Resources/config/routing/photograph.yml"
+    prefix:   /admin/photograph
+
+LTPhotosBundle_adminphotograph:
+    resource: "@LTPhotosBundle/Resources/config/routing/adminphotograph.yml"
+    prefix: /photograph
+
+LTPhotosBundle_maintenance:
+    resource: "@LTPhotosBundle/Resources/config/routing/maintenance.yml"
+    prefix: /maintenance
+
+lt_photos_search_events:
+    path: /event/search
+    defaults: { _controller:LTPhotosBundle:Ajax:eventSearch }
+
+lt_photos_admin_search_events:
+    path: /admin/event/search
+    defaults: { _controller:LTPhotosBundle:Ajax:eventAdminSearch }
+
+lt_photos_upload_photos:
+    path: /upload/{eventSlug}/{categorySlug}
+    defaults: { _controller:LTPhotosBundle:Photo:uploadPhotos, categorySlug = null }
+
+LTUserBundle_user:
+        resource: "@LTUserBundle/Resources/config/routing/user.yml"
+        prefix:   /admin/user
+
+lt_show_profile:
+    path: /profile/{id}
+    defaults: { _controller:LTUserBundle:Profile:show }
+    requirements:
+        id: \d+
+
+lt_user_profile_show:
+    path: /profile/
+    defaults: { _controller:LTUserBundle:Profile:show }
+
+lt_photos_download:
+    path: /download/{event}/{photograph}
+    defaults: { _controller:LTPhotosBundle:Photo:createZip, photograph = all }
+
+event_results:
+    path: /results/event
+    defaults: { _controller:LTPhotosBundle:Event:results }
+
+event_bulk_delete:
+    path: /bulk/delete/event
+    methods: [ post ]
+    defaults: { _controller:LTPhotosBundle:Event:bulkDelete }
+
+event_bulk_invisible:
+    path: /bulk/invisible/event
+    methods: [ post ]
+    defaults: { _controller:LTPhotosBundle:Event:bulkInvisible }

@@ -1,0 +1,19 @@
+{# src/LT/PhotosBundle/Resources/views/index.html.twig #}
+
+{% extends "LTPhotosBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Accueil{% endblock %}
+
+{% block body %}
+
+<p>Bonjour et bienvenue sur le serveur photo de l'ENS Cachan .</p>
+
+<p>Vous y trouverez la plupart des photos depuis 2004 jusqu'à nos jours !</p>
+
+<p>Pour visualiser les dernières photos qui ont été mises en ligne utiliser l'onglet Récent.</p>
+
+<p>Pour uploader des photos aller sur la page Upload, tout est expliqué.</p>
+
+<p>Si vous avez une demande de censure, une question, une idée,  n'hésitez pas à utiliser le formulaire de contact.</p>
+
+{% endblock %}

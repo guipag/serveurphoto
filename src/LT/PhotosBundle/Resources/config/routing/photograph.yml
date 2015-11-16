@@ -1,0 +1,30 @@
+photograph:
+    path:     /
+    defaults: { _controller: "LTPhotosBundle:Photograph:index" }
+
+photograph_show:
+    path:     /{id}/show
+    defaults: { _controller: "LTPhotosBundle:Photograph:show" }
+
+photograph_new:
+    path:     /new
+    defaults: { _controller: "LTPhotosBundle:Photograph:new" }
+
+photograph_create:
+    path:     /create
+    defaults: { _controller: "LTPhotosBundle:Photograph:create" }
+    methods: [ POST ]
+
+photograph_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LTPhotosBundle:Photograph:edit" }
+
+photograph_update:
+    path:     /{id}/update
+    defaults: { _controller: "LTPhotosBundle:Photograph:update" }
+    methods: [ POST, PUT]
+
+photograph_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LTPhotosBundle:Photograph:delete" }
+    methods: [ POST, DELETE ]

@@ -1,0 +1,18 @@
+{# src/LT/PhotosBundle/Resources.views/photos.html.twig #}
+
+{% extends "LTCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Photos{% endblock %}
+
+{% block header %}{{ parent() }}<div class="col-md-12"></div>{% endblock%}
+
+{% block body %}
+
+<div class="row">
+{% for event in listEvents %}
+    <div class="col-xs-8 col-sm-2 col-md-2">{{ event.name }}</div>
+{% endfor %}
+</div>
+
+{% endblock %}
+

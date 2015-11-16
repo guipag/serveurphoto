@@ -1,0 +1,9 @@
+photograph_new_sa:
+    path:     /new
+    defaults: { _controller: "LTPhotosBundle:Photograph:new" }
+
+photograph_create_sa:
+    path:     /create
+    defaults: { _controller: "LTPhotosBundle:Photograph:create" }
+    requirements: { _method: post }
+

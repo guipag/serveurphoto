@@ -1,0 +1,32 @@
+ <table class="table table-condensed table-striped table-bordered table-responsive records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom d'utilisateur</th>
+                <th>e-mail</th>
+                <th>Valide</th>
+                <th>Droits</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.username }}</a></td>
+                <td>{{ entity.email }}</a></td>
+                <td>{{ entity.enabled }}</a></td>
+                <td>{% for role in entity.roles %}['{{ role }}'] {% endfor %}</a></td>
+                <td>
+                <ul>
+                        <a class="btn btn-primary" href="{{ path('user_show', { 'id': entity.id }) }}">Voir</a>
+                        <a class="btn btn-primary" href="{{ path('user_edit', { 'id': entity.id }) }}">Editer</a>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+  </tbody>
+</table>
+
+
+

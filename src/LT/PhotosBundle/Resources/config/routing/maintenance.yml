@@ -1,0 +1,3 @@
+lt_maintenance_index:
+    path: /index
+    defaults: { _controller:LTPhotosBundle:Maintenance:index }

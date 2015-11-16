@@ -1,0 +1,187 @@
+{% extends "LTCoreBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+<style type="text/css">
+#portfolio {
+  margin: 0 auto;
+}
+.bloc {
+  margin: 5px;
+  height: 100px;
+  width: 150px;
+}
+.utility {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(66,139,202,0.75);
+  width: 100%;
+  height: 100%;
+  padding: 2%;
+  display: none;
+  text-align: center;
+  color: #fff !important;
+  z-index: 2;
+}
+
+.thumbnail2 {
+    //position:relative;
+    overflow:hidden;
+}
+ 
+.caption {
+    position:absolute;
+    top:0;
+    right:0;
+    background:rgba(216, 216, 216, 0.75);
+    width:100%;
+    height:100%;
+    padding:2%;
+    display: none;
+    text-align:center;
+    color:#fff !important;
+    z-index:10;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+{{ wo_render_breadcrumbs() }}
+
+<center><h4>
+  <div class="btn-group">
+      <a class="btn btn-default" href="">Toutes</a>
+    {% for photograph in photographs %}
+      <a class="btn btn-default" href="#{{ photograph.id }}">Photos de {{ photograph.nickname }}</a>
+    {% endfor %}
+  </div>
+</center></h4>
+
+<div id="portfolio">
+  <div id="links">
+  {% for photo in photos %}
+  <div class="thumbnail2">
+    <div class="bloc {{ photo.photograph.id }}">
+      <a href="{{ asset(photo.getWebPath | imagine_filter('rotate_gallery')) }}" data-prototype="&lt;span class=&quot;glyphicon glyphicon-download-alt&quot;&gt;Test&lt;/span&gt;">
+        <img src="{{ asset(photo.getWebPath | imagine_filter('my_thumb')) }}" id="thumb" width="150px" height="100px">
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+</div>
+
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Télécharger...
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+{% for photograph in photographs %}
+    <li><a href="{{ path('lt_photos_download', {'event': event.id, 'photograph': photograph.id}) }}">Les photos de {{ photograph.nickname }}</a></li>
+{% endfor %}
+  </ul>
+</div>
+
+<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <a class="download">o</a>
+    <ol class="indicator"></ol>
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body next"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left prev">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                        Previous
+                    </button>
+                    <button type="button" class="btn btn-primary next">
+                        Next
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ asset("bundles/LTPhotos/js/masonry.js") }}"></script>
+<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+
+<script type="text/javascript">
+jQuery(function($){
+	var portfolio = $('#portfolio');
+	portfolio.masonry({
+		isAnimated: true,
+		itemSelector:'.bloc:not(.hidden)',
+		isFitWidth:true,
+		columnWidth:160
+	});
+
+	$('h4 a').click(function(e){
+		var cls = $(this).attr('href').replace('#','');
+		portfolio.find('.bloc').removeClass('hidden'); 
+		portfolio.find('.bloc:not(.'+cls+')').addClass('hidden');
+		portfolio.masonry('reload'); 
+		portfolio.find('.'+cls).show(500);
+		portfolio.find('.bloc:not(.'+cls+')').hide(500);
+
+		location.hash = cls;
+		e.preventDefault(); 
+	});
+
+	var bloc = portfolio.find('.bloc:first'); 
+	var cssi = {width:bloc.width(),height:bloc.height()};
+	var cssf = null; 
+
+	if(location.hash != ''){
+		$('a[href="'+location.hash+'"]').trigger('click');
+	}
+})
+</script>
+
+<script type="text/javascript">
+document.getElementById('links').onclick = function (event) {
+    event = event || window.event;
+    var target = event.target || event.srcElement,
+        link = target.src ? target.parentNode : target,
+        options = {index: link, event: event, continuous: false, slideshowInterval: 5000, fullScreen: false, titleProperty: 'data-prototype',},
+	links = this.querySelectorAll('.bloc:not(.hidden) a');
+        //links = this.getElementsByTagName('a');
+    blueimp.Gallery(links, options);
+};
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+ $("[rel='tooltip']").tooltip();    
+ 
+    $('.thumbnail2').hover(
+        function(){
+            $(this).find('.caption').slideDown(250); //.fadeIn(250)
+        },
+        function(){
+            $(this).find('.caption').slideUp(250); //.fadeOut(205)
+        }
+    ); 
+
+
+});
+</script>
+
+{% endblock %}
+
+

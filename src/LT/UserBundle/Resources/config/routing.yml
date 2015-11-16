@@ -1,0 +1,8 @@
+lt_user_index:
+    path: /user
+    defaults: { _controller: "LTUserBundle:User:index" }
+
+lt_user_search:
+    path: user/search
+    defaults: { _controller: "LTUserBundle:Ajax:userSearch" }
+

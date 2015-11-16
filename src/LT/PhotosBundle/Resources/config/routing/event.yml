@@ -1,0 +1,43 @@
+event:
+    path:     /
+    defaults: { _controller: "LTPhotosBundle:Event:index" }
+
+event_show:
+    path:     /{id}/show
+    defaults: { _controller: "LTPhotosBundle:Event:show" }
+
+event_new:
+    path:     /new
+    defaults: { _controller: "LTPhotosBundle:Event:new" }
+
+event_create:
+    path:     /create
+    defaults: { _controller: "LTPhotosBundle:Event:create" }
+    methods: [ POST ]
+
+event_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LTPhotosBundle:Event:edit" }
+
+event_update:
+    path:     /{id}/update
+    defaults: { _controller: "LTPhotosBundle:Event:update" }
+    methods: [ POST, PUT ]
+
+event_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LTPhotosBundle:Event:delete" }
+    methods: [ POST, DELETE ]
+
+event_deplace:
+    path: /{id}/{photograph}
+    defaults: { _controller: "LTPhotosBundle:Event:deplace" }
+
+event_censure:
+    path: /{id}/censure/{photograph}
+    defaults: { _controller:"LTPhotosBundle:Event:censure" }
+
+event_valid:
+    path: /{id}/valid/{photograph}
+    defaults: { _controller:"LTPhotosBundle:Event:valid" }
+

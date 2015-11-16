@@ -1,0 +1,90 @@
+{% extends "LTCoreBundle::layout.html.twig" %}
+
+{% block body %}
+
+<div class="well">
+<p>Choisissez l'évènement vers lequel déplacer les photos :</p>
+<form id="form_recherche" action="{{ path('lt_photos_search_events') }}" method="post">
+     <div class="input-group">
+
+        <input type="text" class="form-control" id="event" name="event" placeholder="Rechercher...">
+        <span class="input-group-btn">
+
+          <button class="btn btn-default" type="submit">Go !</button>
+        </span>
+        <!--<input type="submit" value="Rechercher" />-->
+    </div>
+</form>
+<br />
+<div class="loading"></div>
+<div id="resultats_recherche">
+    {% include 'LTPhotosBundle:Default:listEvent.html.twig' with {'events' : events}  %}
+</div>
+</div>
+
+<div class="modal fade" id="formulaire">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h4 class="modal-title">Création de l'évènement :</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="well">
+          {{ form_start(form_event, {'attr': {'class': 'form-horizontal'}}) }}
+            {{ form_errors(form_event) }}
+
+            <div class="form-group">
+              {{ form_label(form_event.name, "Nom de l'évènement", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+              {{ form_errors(form_event.name) }}
+
+              <div class="col-sm-4">
+                {{ form_widget(form_event.name, {'attr': {'class': 'form-control'}}) }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              {{ form_label(form_event.date, "Date", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+              {{ form_errors(form_event.date) }}
+
+              <div class="col-sm-4">
+                {{ form_widget(form_event.date, {'attr': {'class': 'form-control'}}) }}
+              </div>
+            </div>
+          {{ form_widget(form_event.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+
+          {{ form_rest(form_event) }}
+          {{ form_end(form_event) }}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-info" data-dismiss="modal">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(".loading").hide();
+$("#form_recherche").submit(function(){
+    $(".loading").show();
+    var motcle = $("#event").val();
+    var DATA = 'motcle=' + motcle;
+    $.ajax({
+        type: "POST",
+        url: "/app_dev.php/event/search",
+        data: DATA,
+        cache: false,
+        success: function(data){
+           $('#resultats_recherche').html(data);
+           $(".loading").hide();
+        }
+    });
+    return false;
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+<table class="table table-bordered table-striped table-condensed table-responsive">
+  <thead>
+    <tr>
+	<th>Nom</th>
+	<th>Date</th>
+	<th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td colspan="3"><button data-toggle="modal" href="#formulaire" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> créer un évènement</$
+    </tr>
+{% for a in events %}
+    <tr>
+	<td>{{ a.name }}</td>
+	<td>{{ a.date|date('d/m/Y') }}</td>
+	<td>
+	{% if a.categories|length == 0 %}
+	  <a class="btn btn-primary" href="{{ app.request.uri ~ '/' ~ a.slug }}">voir</a>
+	  <a class="btn btn-success" href="{{ path('lt_photos_upload_photos', { 'eventSlug': a.slug }) }}">selectionner <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+	{% endif %}
+	</td>
+    </tr>
+  {% if a.categories|length != 0 %}
+    {% for c in a.categories %}
+      <tr>
+	<td>{{ c.name }}</td>
+        <td></td>
+	<td>
+	  <a class="btn btn-primary" href="{{ app.request.uri ~ '/' ~ a.slug ~ '/' ~ c.slug }}">voir</a>
+          <a class="btn btn-success" href="{{ path('lt_photos_upload_photos', { 'eventSlug': a.slug, 'categorySlug': c.slug }) }}">selectionner <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+	</td>
+      <tr>
+    {% endfor %}
+  {% endif %}
+{% else %}
+    <tr>
+	<td colspan="3">Aucun évènement n'a été trouvé.</td>
+    </tr>
+{% endfor %}
+    <tr>
+	<td colspan="3"><button data-toggle="modal" href="#formulaire" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> créer un évènement</button></td>
+    </tr>
+  </tbody>
+</table>

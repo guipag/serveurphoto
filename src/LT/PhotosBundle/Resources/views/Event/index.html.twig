@@ -1,0 +1,45 @@
+{% extends 'LTCoreBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h3>Liste des évènements :</h3>
+
+<form id="form_recherche" action="{{ path('lt_photos_admin_search_events') }}" method="post">
+     <div class="input-group">
+
+        <input type="text" class="form-control" id="event" name="event" placeholder="Rechercher...">
+        <span class="input-group-btn">
+
+          <button class="btn btn-default" type="submit">Go !</button>
+        </span>
+        <!--<input type="submit" value="Rechercher" />-->
+    </div>
+</form>
+<br />
+<div class="loading"></div>
+<div id="resultats_recherche">
+    {% include 'LTPhotosBundle:Event:listEvent.html.twig' with {'entities' : entities}  %}
+</div>
+</div>
+
+<script>
+$(".loading").hide();
+$("#form_recherche").submit(function(){
+    $(".loading").show();
+    var motcle = $("#event").val();
+    var DATA = 'motcle=' + motcle;
+    $.ajax({
+        type: "POST",
+        url: "/app_dev.php/admin/event/search",
+        data: DATA,
+        cache: false,
+        success: function(data){
+           $('#resultats_recherche').html(data);
+           $(".loading").hide();
+        }
+    });
+    return false;
+});
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,44 @@
+parameters:
+#    lt_photos.example.class: LT\PhotosBundle\Example
+
+services:
+    lt_photos.scolardate:
+        class: LT\PhotosBundle\Services\LTScolardate
+        tags:
+            - { name: twig.extension }
+
+    form.type.datePicker:
+        class: LT\PhotosBundle\Form\DatePickerType
+        tags:
+          - { name: form.type, alias: datePicker }
+
+    my_photo.photo_manager:
+        class: LT\PhotosBundle\Managers\PhotoManager
+        arguments: [@doctrine.orm.default_entity_manager]
+
+    my_photo.photo_extension:
+        class: LT\PhotosBundle\Services\PhotoExtension
+        arguments: ["@my_photo.photo_manager"]
+        tags:
+            - { name: twig.extension }
+
+    lt_photos.notif_mail.listener:
+        class: LT\PhotosBundle\NotifMail\SendMailListener
+        arguments: [@mailer]
+        tags:
+            - { name: kernel.event_listener, event: lt_photos.notifmail.post_photos, method: processSendMail }
+
+    lt_photo.admin_manager:
+        class: LT\PhotosBundle\Managers\AdminManager
+        arguments: [@doctrine.orm.default_entity_manager]
+
+    lt_photo.admin_extension:
+        class: LT\PhotosBundle\Services\AdminExtension
+        arguments: ["@lt_photo.admin_manager"]
+        tags:
+            - { name: twig.extension }
+
+    app.datatable.event:
+        class: LT\PhotosBundle\Datatables\EventDatatable
+        tags:
+            - { name: sg.datatable.view }

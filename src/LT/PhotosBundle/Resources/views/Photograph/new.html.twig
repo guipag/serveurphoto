@@ -1,0 +1,110 @@
+{% extends 'LTCoreBundle::layout.html.twig' %}
+
+{% block body %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+    <div class="alert alert-error">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+
+<div class="alert alert-warning" role="alert">Si vous avez déjà un compte utilisateur il faut passer par Mon compte -> Upgrader en photographe.</div>
+
+<p>Pour vous inscrire vous devez avoir une adresse mail valide se terminant en @crans.org ou ens-cachan.fr.</p>
+
+<div class="well">
+
+<form method="post" action="/app.php/photograph/create" class="form-horizontal">
+
+    <legend>Créer votre compte photographe maintenant !</legend>
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+        {{ form_label(form.name, "Nom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.name) }}
+            <div  class="col-sm-4">
+		{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+	    </div>
+    </div>    
+
+    <div class="form-group">
+        {{ form_label(form.firstname, "Prénom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.firstname) }}
+            <div  class="col-sm-4">
+                {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+            </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.user.username, "Nom d'utilisateur", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.user.username) }}
+            <div  class="col-sm-4">
+                {{ form_widget(form.user.username, {'attr': {'class': 'form-control'}}) }}
+            </div>
+    </div>
+
+
+    <div class="form-group">
+        {{ form_label(form.nickname, "Nom de photographe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.nickname) }}
+            <div  class="col-sm-4">
+                {{ form_widget(form.nickname, {'attr': {'class': 'form-control'}}) }}
+            </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.user.email, "Email", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.user.email) }}
+            <div  class="col-sm-4">
+                {{ form_widget(form.user.email, {'attr': {'class': 'form-control'}}) }}
+            </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.user.plainPassword.first, "Mot de passe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.user.plainPassword.first) }}
+            <div  class="col-sm-4">
+                {{ form_widget(form.user.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+            </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.user.plainPassword.second, "Retaper mot de passe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.user.plainPassword.second) }}
+            <div  class="col-sm-4">
+                {{ form_widget(form.user.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+            </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.description, "Parlez nous de vous (appareil photo, objectifs, ...)", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.description) }}
+            <div  class="col-sm-4">
+                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+            </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.licence, "Licence des photos", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.licence) }}
+        <div class="col-sm-4">
+             {{ form_widget(form.licence, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+      {{ form_widget(form.user.followed, {'attr': {'class': 'col-sm-3'}}) }}
+
+      <div class="col-sm-4">
+        {{ form_label(form.user.followed, "Recevoir les notifications de mise en ligne par mail", {'label_attr': {'class': 'control-label'}}) }}
+      </div>
+    </div>
+
+
+    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

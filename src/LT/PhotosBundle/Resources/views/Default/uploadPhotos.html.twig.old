@@ -1,0 +1,163 @@
+{# LTPHotosBundle:Default:uploadPhotos.html.twig #}
+
+{% extends "LTPhotosBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+<style>
+#file {
+  display: none;
+}
+.formhidden {
+  display: none;
+}
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="well">
+  <form id="formupload" action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+    <span id="fileuploadbutton" class="btn btn-success fileinput-button">
+      <i class="glyphicon glyphicon-plus"></i>
+      <span>Ajouter des photos</span>
+      <input id="file" type="file" multiple />
+    </span>
+    <button type="submit" class="btn btn-primary">
+      <i class="glyphicon glyphicon-upload"></i>
+      <span>Télécharger</span>
+    </button>
+    <button type="reset" class="btn btn-warning">
+      <i class="glyphicon glyphicon-ban-circle"></i>
+      <span>Annuler</span>
+    </button>
+    <span class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      <span>Supprimer</span>
+    </span>
+  </form>
+
+  <div id="prev">
+    <table id="tableprev" class="table table-bordered">
+      <caption>Prévisualisation</caption>
+      <thead>
+	<tr>
+	  <th>Image</th>
+	  <th>Progression</th>
+	  <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+	<tr><td colspan="3"><i> Aucune image à télécharger...</i></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</div>
+
+<div class="formhidden">
+  {{ form(form) }}
+</div>
+
+<script type="text/javascript">
+(function() {
+  var firstThumb = true;
+  function createThumbnail(file) {
+    var reader = new FileReader();
+
+    reader.addEventListener('load', function() {
+      var imgElement = document.createElement('img');
+      imgElement.style.maxWidth = '150px';
+      imgElement.style.maxHeight = '150px';
+      imgElement.src = this.result;
+	//placer l'image dans le tableau
+      var tableprev = document.getElementById("tableprev");
+      if (firstThumb) {      
+	tableprev.deleteRow(-1);
+	firstThumb = false;
+      }
+      var ligne = tableprev.insertRow(-1);
+      var colonne1 = ligne.insertCell(0);//on a une ajouté une cellule
+      colonne1.appendChild(imgElement);
+      var col2 = ligne.insertCell(1);
+      var progElt = document.createElement('progress');
+      progElt.id = 'progress';
+      progElt.class = 'progress progress-striped active';
+      col2.appendChild(progElt);
+      var col3 = ligne.insertCell(2);
+    }, false);
+
+    reader.readAsDataURL(file);
+  }
+
+  var allowedTypes = ['png', 'jpg', 'jpeg', 'gif'],
+      fileInput = document.querySelector('#file'),
+      prev = document.querySelector('#prev');
+
+  fileInput.addEventListener('change', function(e) {
+    var files = e.target.files,
+        filesLen = files.length,
+        imgType;
+
+    for (var i = 0 ; i < filesLen ; i++) {
+      imgType = files[i].name.split('.');
+      imgType = imgType[imgType.length -1].toLowerCase();
+
+      if (allowedTypes.indexOf(imgType) != -1) {
+	createThumbnail(files[i]);
+      }
+    }
+  }, false);
+})();
+
+$(document).ready(function(e) {
+  var count=0;
+  $('#formupload').on('ajax',(function(e){
+    var $this = $(this);
+    if (typeof this.files[count] === 'undefined') { return false; }
+
+    formData = new FormData();
+    formData.append('lt_photosbundle_photo[_token]', document.querySelector('#lt_photosbundle_photo__token').value);
+    formData.append('lt_photosbundle_photo[file]', $this.files[count]);
+    formData.append('lt_photosbundle_photo[valid]', 1);
+
+    $.ajax({
+      type: 'POST',
+      url: '{{ app.request.uri }}',
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      xhr: function() {
+	var xhr = $.ajaxSettings.xhr();
+	if (xhr.upload) {
+	  xhr.upload.addEventListener('progress', progressbar, false);
+	}
+	return xhr;
+      },
+      success: function() {
+	count++;
+	$this.trigger('ajax');
+      }
+    });
+  })).trigger('ajax');
+});
+
+</script>
+
+<script type="text/javascript">
+
+var buttonFile = document.getElementById("fileuploadbutton"),
+    fileField  = document.getElementById("file");
+
+buttonFile.addEventListener('click', function(e) {
+  fileField.click();
+}, false);
+
+
+</script>
+
+{% endblock %}

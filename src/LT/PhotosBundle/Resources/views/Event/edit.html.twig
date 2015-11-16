@@ -1,0 +1,179 @@
+{% extends 'LTCoreBundle::layout.html.twig' %}
+
+{% block body -%}
+
+  <ul class="pager">
+    <li><a href="{{ path('event') }}">
+           <span aria-hidden="true" class="glyphicon glyphicon-triangle-left"></span> retourner à la liste
+        </a></li>
+  </ul>
+
+    <h3>Editer l'évènement</h3>
+
+
+<div class="well">
+{{ form_start(edit_form, {'attr': {'class': 'form-horizontal'}}) }}
+{{ form_errors(edit_form) }}
+
+  <div class="form-group">
+      {# Génération du label. #}
+      {{ form_label(edit_form.name, "Nom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {# Affichage des erreurs pour ce champ précis. #}
+      {{ form_errors(edit_form.name) }}
+
+      <div class="col-sm-4">
+        {# Génération de l'input. #}
+        {{ form_widget(edit_form.name, {'attr': {'class': 'form-control'}}) }}
+      </div>
+  </div>
+
+  <div class="form-group">
+      {# Génération du label. #}
+      {{ form_label(edit_form.date, "Date de début", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {# Affichage des erreurs pour ce champ précis. #}
+      {{ form_errors(edit_form.date) }}
+
+      <div class="col-sm-4">
+        {# Génération de l'input. #}
+        {{ form_widget(edit_form.date, {'attr': {'class': 'form-control'}}) }}
+      </div>
+  </div>
+
+  <div class="form-group">
+      {# Génération du label. #}
+      {{ form_label(edit_form.dateFin, "Date de fin", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {# Affichage des erreurs pour ce champ précis. #}
+      {{ form_errors(edit_form.dateFin) }}
+
+      <div class="col-sm-4">
+        {# Génération de l'input. #}
+        {{ form_widget(edit_form.dateFin, {'attr': {'class': 'form-control'}}) }}
+      </div>
+  </div>
+
+
+  <div class="form-group">
+      {# Génération du label. #}
+      {{ form_label(edit_form.categories, "Categories", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {# Affichage des erreurs pour ce champ précis. #}
+      {{ form_errors(edit_form.categories) }}
+
+      <div class="col-sm-4">
+        {# Génération de l'input. #}
+        {{ form_widget(edit_form.categories, {'attr': {'class': ''}}) }}
+      </div>
+  </div>
+
+{{ form_widget(edit_form.submit, {'attr': {'class': 'btn btn-default'}}) }}
+
+{{ form_rest(edit_form) }}
+
+{{ form_end(edit_form) }}
+
+
+</div>
+
+<h3>Supprimer l'évènement</h3>
+{{ form_start(delete_form) }}
+{{ form_widget(delete_form.submit, {'attr': {'class': 'btn btn-danger'}}) }}
+{{ form_rest(delete_form) }}
+{{ form_end(delete_form) }}
+
+<h3>Liste des photographes</h3>
+<table class="table table-bordered table-striped table-condensed table-responsive">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Nombre de photos postées</th>
+      <th>Nombre de photos censurées</th>
+      <th>Nombre de photos à valider</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for photograph in entity.getPhotographs %}
+    <tr>
+      <td>{{ photograph.name }}</td>
+      <td>{{ nbrPhotos[photograph.nickname] }}</td>
+      <td>{{ nbrPhotosCensured[photograph.nickname] }}</td>
+      <td>{{ nbrPhotosToValidate[photograph.nickname] }}</td>
+      <td>
+	<a class="btn btn-primary" href="{{ path('lt_photos_base') ~ 'admin/' ~ scolarYear(entity.date) ~ '/' ~ entity.slug ~ '/gallery#' ~ photograph.id }}">voir</a>
+	<a class="btn btn-success" href="{{ path('event_valid', {'id': entity.id, 'photograph': photograph.id}) }}">valider</a>
+	<a class="btn btn-warning" href="{{ path('event_censure', {'id': entity.id, 'photograph': photograph.id}) }}">censurer</a>
+	<a class="btn btn-danger" href="#">supprimer</a>
+        <a class="btn btn-primary" href="#">déplacer</a>
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+    var $container = $('div#lt_photosbundle_event_categories');
+
+    // On ajoute un lien pour ajouter une nouvelle catégorie
+    var $addLink = $('<a href="#" id="add_category" class="btn btn-default">Ajouter une catégorie</a>');
+    $container.append($addLink);
+
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+    $addLink.click(function(e) {
+      addCategory($container);
+      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+      return false;
+    });
+
+    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+    var index = $container.find(':input').length;
+
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+    if (index == 0) {
+      //addCategory($container);
+    } else {
+      // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
+      $container.children('div').each(function() {
+        addDeleteLink($(this));
+      });
+    }
+ // La fonction qui ajoute un formulaire Categorie
+    function addCategory($container) {
+      // Dans le contenu de l'attribut « data-prototype », on remplace :
+      // - le texte "__name__label__" qu'il contient par le label du champ
+      // - le texte "__name__" qu'il contient par le numéro du champ
+      var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+          .replace(/__name__/g, index));
+
+      // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+      addDeleteLink($prototype);
+
+      // On ajoute le prototype modifié à la fin de la balise <div>
+      $container.append($prototype);
+
+      // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+      index++;
+    }
+
+    // La fonction qui ajoute un lien de suppression d'une catégorie
+    function addDeleteLink($prototype) {
+      // Création du lien
+      $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+      // Ajout du lien
+      $prototype.append($deleteLink);
+
+      // Ajout du listener sur le clic du lien
+      $deleteLink.click(function(e) {
+        $prototype.remove();
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+      });
+    }
+  });
+</script>
+
+{% endblock %}

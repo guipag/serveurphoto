@@ -1,0 +1,204 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+
+framework:
+    #esi:             ~
+    translator:      { fallback: "%locale%" }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:         
+        name: ltphotos_session
+        handler_id: session.handler.native_file
+        save_path: "%kernel.root_dir%/sessions"
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:        [ LTPhotosBundle ]
+    #java: /usr/bin/java
+    filters:
+        cssrewrite: ~
+        #closure:
+        #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
+        #yui_css:
+        #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver, add the path in parameters.yml
+        # e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        # path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "mail"
+
+stof_doctrine_extensions:
+    default_locale: fr_FR
+    orm:
+        default:
+            sluggable: true
+            timestampable: true
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: LT\UserBundle\Entity\User
+    from_email:
+        address:        photos@crans.org
+        sender_name:    Serveur photos
+    registration:
+        form:
+            type: lt_user_registration
+        confirmation:
+            enabled:    true
+
+genemu_form:
+    recaptcha:
+        public_key: "6Lf-DQQTAAAAAPGBjSCO_dRJrwZc59F4z9Y2TjLy"
+        private_key: "6Lf-DQQTAAAAAPiZh-MWafI65HGf1nGh_e0sOM2Y"
+
+services:
+    lt_user_registration:
+        class: LT\UserBundle\Form\Type\RegistrationFormType
+        arguments: [% fos_user.model.user.class %]
+        tags:
+            - { name: form.type, alias: lt_user_registration }
+
+    lt.cacheimage_listener:
+        class: LT\PhotosBundle\Listener\CacheImageListener
+        arguments: ["@liip_imagine.cache.manager"]
+        tags:
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: preRemove }
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+
+    filter_sets:
+        cache: ~
+        my_thumb:
+            quality: 75
+            filters:
+                auto_rotate: ~
+                strip: ~
+                thumbnail: { size: [150, 100], mode: outbound }
+        front_thumb:
+            quality: 95
+            filters:
+                auto_rotate: ~
+                strip: ~
+                thumbnail: { size: [260, 180], mode: outbound }
+        rotate_gallery:
+            quality: 100
+            filters:
+                auto_rotate: ~
+
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: blueimp
+
+white_october_breadcrumbs:
+    separator:          ''
+    separatorClass:     'separator'
+
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+fos_elastica:
+  clients:
+    default: { host: localhost, port: 9200 }
+  indexes:
+    lt_photos_index:
+      client: default
+      settings:
+        index:
+          analysis:
+            analyzer:
+              custom_analyzer :
+                type     :    custom
+                tokenizer:    nGram
+                filter   :    [stopwords, asciifolding ,lowercase, snowball, elision, worddelimiter]
+              custom_search_analyzer :
+                type     :    custom
+                tokenizer:    standard
+                filter   :    [stopwords, asciifolding ,lowercase, snowball, elision, worddelimiter]
+            tokenizer:
+              nGram:
+                type:     nGram
+                min_gram: 2
+                max_gram: 20
+            filter:
+              snowball:
+                type:     snowball
+                language: French
+              elision:
+                type:     elision
+                articles: [l, m, t, qu, n, s, j, d]
+              stopwords:
+                type:      stop
+                stopwords: [_french_]
+                ignore_case : true
+              worddelimiter :
+                type:      word_delimiter
+      types:
+          event:
+              mappings:
+                  name:
+                    boost: 6
+                    index_analyzer : custom_analyzer
+                    search_analyzer : custom_search_analyzer
+                  date:
+                      type: "date"
+                  slug:
+                    index_analyzer : custom_analyzer
+                    search_analyzer : custom_search_analyzer
+              persistence:
+                  driver: orm
+                  model: LT\PhotosBundle\Entity\Event
+                  finder: ~
+                  provider: ~
+                  listener: ~
+

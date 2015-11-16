@@ -1,0 +1,47 @@
+<?php
+
+namespace LT\PhotosBundle\Command;
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\Finder;
+
+use LT\PhotosBundle\Entity\Event;
+
+class ImportCommand extends Command {
+    protected function configure() {
+        $this
+            ->setName('photos:import')
+            ->setDescription('Script d\'import des photos de l\'ancien vers le nouveau serveur photo')
+            ->addArgument(
+                'path',
+                InputArgument::REQUIRED,
+                'Quel dossier voulez-vous importer ?'
+            )
+        ;
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output) {
+        $path = $input->getArgument('path');
+	//traiter les sous-dossiers / photos dans le dossier path
+	$finder = new Finder();
+	$finder->depth('== 0');
+	$finder->directories()->in($path);
+
+	foreach ($finder as $file) {
+	    $textdate = preg_replace('#^(\d{4}) (\d{2}) (\d{2})(.+)$#isU', '$1 $2 $3', $file->getRelativePathName());
+	    $date = \DateTime::createFromFormat('Y m d', $textdate);
+
+	    $name = preg_replace('#^\d{4} \d{2} \d{2} - (.+)$#isU', '$1', $file->getRelativePathName());
+
+	    $event = new Event();
+	    $event->setDate($date);
+	    $event->setName($name);
+
+	    var_dump($event);
+	}
+    }
+}

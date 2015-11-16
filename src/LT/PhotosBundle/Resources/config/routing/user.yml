@@ -1,0 +1,12 @@
+user:
+    path: /
+    defaults: { _controller: "LTUserBundle:User:index" }
+    requirements:
+        methods:  [ GET ]
+
+user_create:
+    path: /
+    defaults: { _controller: "LTUserBundle:User:index" }
+    requirements:
+        methods:  [ POST ]
+

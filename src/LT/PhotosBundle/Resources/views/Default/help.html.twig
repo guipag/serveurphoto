@@ -1,0 +1,28 @@
+{# LTPhotosBundle:Default:help.html.twig #}
+
+{% extends "LTCoreBundle::layout.html.twig" %}
+
+{% block body %}
+
+<h4>Téléchargement par HTTP</h4>
+
+<p>Si vous avez peu de photos à mettre en ligne vous pouvez passer par la partie téléchargement en HTTP. Tout se réalise en ligne pour cette partie. Il suffit de se rendre à la page de téléchargement HTTP, de sélectionner l'évènement (ou d'en créer un nouveau) puis d'y déposer vos photos dessus.</p>
+<p>Attention la reprise du téléchargement n'est pas possible par cette méthode.</p>
+
+<p>Lorsque vous télécharger les images en HTTP elles sont traitées pendant le téléchargement, ce qui ralenti l'upload mais permet de publier très rapidement les photos.</p>
+
+<h4>Téléchargement en FTP</h4>
+
+<p>Si vous avez beaucoup de photos il est préférable de passer par l'upload en FTP car la reprise du téléchargement fonctionne et c'est un peu plus rapide que en HTTP.</p>
+<p>Lorsque vous uploadez les photos en FTP c'est une tache CRON qui s'occupe de l'import des photos sur le site internet et cela peut prendre du temps.</p>
+
+<p>Lors de la création de votre compte photographe un compte FTP vous a été automatiquement créé. Vous pouvez vous y conencter en utilisant les informations suivantes :</p>
+<ul>
+  <li>Nom d'hote : photos.guipag.fr</li>
+  <li>Utilisateur : nom d'utilisateur du site internet</li>
+  <li>Mot de passe : mot de passe du site internet</li>
+  <li>Port : 21</li>
+</ul>
+
+<p>Avant de déposer les photos sur le serveur FTP il faut que vous alliez sur la page Upload FTP pour sélectionner (ou créer) l'évenement considéré afin de créer les bons dossiers dans votre espace FTP. Sans cela la tache CRON peut planter et la mise en ligne sera bien plus longue.</p>
+{% endblock %}

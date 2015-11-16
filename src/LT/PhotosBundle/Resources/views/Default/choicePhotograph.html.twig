@@ -1,0 +1,24 @@
+{% extends "LTCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Choix de la catégorie{% endblock %}
+
+{% block body %}
+
+{{ wo_render_breadcrumbs() }}
+
+<div class="row">
+{% for category in categories %}
+  <div class="col-sm-3 col-nd-3">
+    <a href="{{ app.request.uri ~ '/' ~category.slug ~ '/gallery' }}">
+      <div class="thumbnail">
+        <img src="{{ asset(cover(category.event, category).getWebPath | imagine_filter('my_thumb')) }}" style="height: 180px; width: 100%; display:block;">
+        <div class="caption">
+          <h4>{{ category.name }}</h4>
+        </div>
+      </div>
+    </a>
+  </div>
+{% endfor %}
+</div>
+
+{% endblock %}

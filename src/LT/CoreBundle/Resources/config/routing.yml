@@ -1,0 +1,3 @@
+lt_core_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: LTCoreBundle:Default:index }

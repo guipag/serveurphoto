@@ -1,0 +1,168 @@
+{% extends "LTCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Upload{% endblock %}
+
+{% block body %}
+
+<div class="well">
+<p>Pour commencer choisissez l'évènement auquel ajouter des photos :</p>
+<form id="form_recherche" action="{{ path('lt_photos_search_events') }}" method="post">
+     <div class="input-group">
+
+        <input type="text" class="form-control" id="event" name="event" placeholder="Rechercher...">
+	<span class="input-group-btn">
+
+	  <button class="btn btn-default" type="submit">Go !</button>
+	</span>
+        <!--<input type="submit" value="Rechercher" />-->
+    </div>
+</form>
+<br />
+<div class="loading"></div>
+<div id="resultats_recherche">
+    {% include 'LTPhotosBundle:Default:listEvent.html.twig' with {'events' : events} %}
+</div>
+</div>
+
+  {{ datatable_render(datatable) }}
+
+<div class="modal fade" id="formulaire">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h4 class="modal-title">Création de l'évènement :</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="well">
+          {{ form_start(form_event, {'attr': {'class': 'form-horizontal'}}) }}
+            {{ form_errors(form_event) }}
+
+            <div class="form-group">
+              {{ form_label(form_event.name, "Nom de l'évènement", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+              {{ form_errors(form_event.name) }}
+
+              <div class="col-sm-4">
+                {{ form_widget(form_event.name, {'attr': {'class': 'form-control'}}) }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              {{ form_label(form_event.date, "Date de début", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+              {{ form_errors(form_event.date) }}
+
+              <div class="col-sm-4">
+                {{ form_widget(form_event.date, {'attr': {'class': 'form-control'}}) }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              {{ form_label(form_event.dateFin, "Date de fin", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+              {{ form_errors(form_event.dateFin) }}
+
+              <div class="col-sm-4">
+                {{ form_widget(form_event.dateFin, {'attr': {'class': 'form-control'}}) }}
+              </div>
+            </div>
+
+          {{ form_widget(form_event.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+
+          {{ form_rest(form_event) }}
+          {{ form_end(form_event) }}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-info" data-dismiss="modal">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(".loading").hide();
+$("#form_recherche").submit(function(){ 
+    $(".loading").show();
+    var motcle = $("#event").val();
+    var DATA = 'motcle=' + motcle;
+    $.ajax({
+        type: "POST",
+        url: "/app_dev.php/event/search",
+        data: DATA,
+        cache: false,
+        success: function(data){
+           $('#resultats_recherche').html(data);
+           $(".loading").hide();
+        }
+    });    
+    return false;
+});
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+    var $container = $('div#lt_photosbundle_event_categories');
+
+    // On ajoute un lien pour ajouter une nouvelle catégorie
+    var $addLink = $('<a href="#" id="add_category" class="btn btn-default">Ajouter une catégorie</a>');
+    $container.append($addLink);
+
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+    $addLink.click(function(e) {
+      addCategory($container);
+      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+      return false;
+    });
+
+    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+    var index = $container.find(':input').length;
+
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+    if (index == 0) {
+      //addCategory($container);
+    } else {
+      // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
+      $container.children('div').each(function() {
+        addDeleteLink($(this));
+      });
+    }
+
+ // La fonction qui ajoute un formulaire Categorie
+    function addCategory($container) {
+      // Dans le contenu de l'attribut « data-prototype », on remplace :
+      // - le texte "__name__label__" qu'il contient par le label du champ
+      // - le texte "__name__" qu'il contient par le numéro du champ
+      var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+          .replace(/__name__/g, index));
+
+      // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+      addDeleteLink($prototype);
+
+      // On ajoute le prototype modifié à la fin de la balise <div>
+      $container.append($prototype);
+
+      // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+      index++;
+    }
+// La fonction qui ajoute un lien de suppression d'une catégorie
+    function addDeleteLink($prototype) {
+      // Création du lien
+      $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+      // Ajout du lien
+      $prototype.append($deleteLink);
+
+      // Ajout du listener sur le clic du lien
+      $deleteLink.click(function(e) {
+        $prototype.remove();
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+      });
+    }
+  });
+</script>
+
+{% endblock %}
