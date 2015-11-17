@@ -27,7 +27,6 @@ class PhotoController extends Controller {
 
         $form = $this->get('form.factory')->create(new PhotoType, $photo);
 
-        //création d'un évènement
         $new_event = new Event();
         $form_event = $this->createForm(new EventType(), $new_event, array(
                     'action' => $this->generateUrl('event_create'),
@@ -35,7 +34,6 @@ class PhotoController extends Controller {
         ));
 
         $form_event->add('submit', 'submit', array('label' => 'Créer'));
-        //formulaire de création d'un nouvel event
 
         if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -44,7 +42,6 @@ class PhotoController extends Controller {
 
             $em->persist($photo);
             $em->flush();
-            //rediriger vers une page
         }
 
         $events = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Event')->findAllDateDesc();
@@ -81,7 +78,6 @@ class PhotoController extends Controller {
             foreach($request->files->get('file') as $file) {
                 $photos[] = new Photo();
 		$photo = end($photos);
-//var_dump($file[0]);
                 $photo->setFile(reset($file));
                 $photo->setPhotograph($photograph);
                 $photo->setValid(false);
@@ -139,7 +135,6 @@ class PhotoController extends Controller {
         return $this->render('LTPhotosBundle:Default:help.html.twig');
     }
     public function deleteAction(Photo $photo) {
-	//pas besoin de l'implémenter pour le moment car non utilisé
     }
 
     public function censureAction(Photo $photo) {

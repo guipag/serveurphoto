@@ -5,5 +5,5 @@ namespace LT\PhotosBundle\NotifMail;
 
 final class NotifMailEvents
 {
-  const onPhotosPost = 'lt_photos.notifmail.post_photos';
+  const ONPHOTOSPOST = 'lt_photos.notifmail.post_photos';
 }

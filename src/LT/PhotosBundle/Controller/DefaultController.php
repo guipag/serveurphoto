@@ -4,8 +4,6 @@ namespace LT\PhotosBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
-use LT\PhotosBundle\Entity\FormContact;
 use LT\PhotosBundle\Entity\Event;
 use LT\PhotosBundle\Entity\Photograph;
 use LT\PhotosBundle\Entity\Category;
@@ -167,7 +165,7 @@ class DefaultController extends Controller
         $breadcrumbs->addItem("Home", $this->get("router")->generate("lt_photos_index"));
         $breadcrumbs->addItem("$year1-$year2", $this->get("router")->generate("lt_photos_year", array('year1' => $year1, 'year2' => $year2)));
         $breadcrumbs->addItem($event->getDate()->format('Y m d') . ' - ' . $event->getName(), $this->get("router")->generate("lt_photos_photograph", array('year1' => $year1, 'year2' => $year2, 'slug' => $event->getSlug())));
-	if ($category != null)
+	if ($category !== null)
 	    $breadcrumbs->addItem($category->getName());
 
 	$photographs=array();

@@ -4,7 +4,6 @@ namespace LT\PhotosBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use LT\PhotosBundle\Entity\Photo;
 use LT\PhotosBundle\Entity\Event;
@@ -342,7 +341,7 @@ class EventController extends Controller
 
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
 	$resp = $query->getResponse();
-	//var_dump($resp);
+
         return $resp;
     }
 

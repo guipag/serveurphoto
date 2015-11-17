@@ -64,7 +64,7 @@ class ImportSingleCommand extends ContainerAwareCommand {
         $photograph = $repoPhotograph->findById($photographId)[0];
 
 	$category = null;
-	if ($categoryId != null) {
+	if ($categoryId !== null) {
 	    $repoCategory = $em->getRepository('LTPhotosBundle:Category');
 	    $category = $repoCategory->findById($categoryId)[0];
 	}
@@ -83,7 +83,7 @@ class ImportSingleCommand extends ContainerAwareCommand {
 	    $photo->setValid(false);
 	    $photo->setCensured(false);
 
-	    if ($category != null) {
+	    if ($category !== null) {
 		$photo->setCategory($category);
 	    }
 

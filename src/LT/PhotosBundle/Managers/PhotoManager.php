@@ -18,7 +18,7 @@ class PhotoManager {
   public function getCover(Event $event, Category $category = null) {
     $photo = $this->em->getRepository('LTPhotosBundle:Photo')->getOnePhotoViewable($event, $category);
 
-    if ($photo == null) {
+    if ($photo === null) {
       $photo = new Photo();
     }
 

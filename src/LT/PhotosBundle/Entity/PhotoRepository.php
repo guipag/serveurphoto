@@ -24,7 +24,7 @@ class PhotoRepository extends EntityRepository {
     $qb->andWhere('p.valid = true');
     $qb->andWhere('p.censured = false');
 
-    if ($category != null)
+    if ($category !== null)
       $qb->andWhere('c.id = :id_cat')->setParameter('id_cat', $category->getId());
 
     $qb->orderBy('p.originalName', 'ASC');
@@ -45,7 +45,7 @@ class PhotoRepository extends EntityRepository {
     $qb->andWhere('p.valid = true');
     $qb->andWhere('p.censured = false');
 
-    if ($category != null)
+    if ($category !== null)
       $qb->andWhere('c.id = :id_cat')->setParameter('id_cat', $category->getId());
 
     $qb->andWhere('h.id = :id_photograph')->setParameter('id_photograph', $photograph->getId());
@@ -59,12 +59,12 @@ class PhotoRepository extends EntityRepository {
     $qb    = $this->createQueryBuilder('p');
 
     $qb->join('p.event','e')->addSelect('e');
-    if ($category != null)
+    if ($category !== null)
       $qb->join('p.category','c')->addSelect('c');
 
     $qb->where('e.id = :id_event')->setParameter('id_event', $event->getId());
 
-    if ($category != null)
+    if ($category !== null)
       $qb->andWhere('c.id = :id_cat')->setParameter('id_cat', $category->getId());
 
     return $qb->getQuery()->getResult();
@@ -74,14 +74,14 @@ class PhotoRepository extends EntityRepository {
     $qb = $this->createQueryBuilder('p');
 
     $qb->join('p.event','e')->addSelect('e');
-    if ($category != null)
+    if ($category !== null)
       $qb->join('p.category','c')->addSelect('c');
 
     $qb->where('e.id = :id_event')->setParameter('id_event', $event->getId());
     $qb->andWhere('p.valid = true');
     $qb->andWhere('p.censured = false');
 
-    if ($category != null)
+    if ($category !== null)
       $qb->andWhere('c.id = :id_cat')->setParameter('id_cat', $category->getId());
 
     //ne prendre qu'une seule image

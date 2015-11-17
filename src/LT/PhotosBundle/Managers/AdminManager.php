@@ -3,9 +3,7 @@
 namespace LT\PhotosBundle\Managers;
 
 use Doctrine\ORM\EntityManager;
-use LT\PhotosBundle\Entity\Photo;
 use LT\PhotosBundle\Entity\Event;
-use LT\PhotosBundle\Entity\Category;
 
 class AdminManager {
   protected $em;
