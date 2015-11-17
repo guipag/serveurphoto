@@ -4,6 +4,7 @@ namespace LT\PhotosBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use LT\PhotosBundle\Entity\Photograph;
 use LT\PhotosBundle\Form\PhotographType;

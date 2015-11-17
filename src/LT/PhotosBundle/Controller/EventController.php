@@ -4,6 +4,7 @@ namespace LT\PhotosBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 use LT\PhotosBundle\Entity\Photo;
 use LT\PhotosBundle\Entity\Event;

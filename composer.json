@@ -39,7 +39,7 @@
         "datatables/datatables": "1.10.7",
         "moment/moment": "2.10.2",
         "friendsofsymfony/jsrouting-bundle": "@stable",
-	"sg/datatablesbundle": "dev-master"
+	"sg/datatablesbundle": "0.7.1"
     },
     "scripts": {
         "post-root-package-install": [
