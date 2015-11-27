@@ -343,6 +343,9 @@ class EventController extends Controller
         $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
 	$resp = $query->getResponse();
 
+	$logger = $this->get('logger');
+	$logger->info($resp);
+
         return $resp;
     }
 

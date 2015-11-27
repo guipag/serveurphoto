@@ -1,0 +1,1 @@
+fos.Router.setData({"base_url":"","routes":{"lt_photos_upload_photos_expose":{"tokens":[["variable","\/","\\d+","eventSlug"],["text","\/upload"]],"defaults":[],"requirements":{"eventSlug":"\\d+","_method":"GET"},"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});

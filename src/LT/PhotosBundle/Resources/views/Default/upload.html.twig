@@ -5,47 +5,113 @@
 {% block title %}{{ parent() }} - Upload{% endblock %}
 
 {% block stylesheets %}
-
-{{ parent() }}
-
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.css">
-
+  {{ parent() }}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
 {% endblock %}
 
 {% block body %}
-<script type="text/javascript">
-$(document).ready(function() {
-  $.fn.dataTable.moment( 'HH:mm MMM D, YY' );
-  $.fn.dataTable.moment( 'dddd, MMMM Do, YYYY' );
-} );
-</script>
-  {{ datatable_render(datatable) }}
 
-<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-<script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
-
-<script src="{{ asset('bundles/LTPhotos/js/moment-with-locales.min.js') }}"></script>
-<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/1.10.9/sorting/datetime-moment.js"></script>
-<script type="text/javascript" class="init">
-
-
-
-
-$(document).ready(function() {
-    var table = $('#event_datatable');
+<p>Pour commencer choisissez dans quel évènement vous voulez publier des photos en le sélectionnant. Dès que c'est fait, cliquez sur continuer !</p>
+<a href=#= id="btncont" class="btn btn-success disabled">Continuer</a>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Nouveau
+</button>
  
-    $('#event_datatable tbody').on( 'click', 'tr', function () {
-        if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
+   {{ datatable_render(datatable) }}
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Création d'un nouvel évènement</h4>
+      </div>
+      <div class="modal-body">
+
+<div class="well">
+{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+{{ form_errors(form) }}
+
+<div class="form-group">
+      {# Génération du label. #}
+      {{ form_label(form.name, "Nom de l'évènement", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {# Affichage des erreurs pour ce champ précis. #}
+      {{ form_errors(form.name) }}
+
+      <div class="col-sm-4">
+        {# Génération de l'input. #}
+        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+<div class="form-group">
+      {# Génération du label. #}
+      {{ form_label(form.date, "Date de début", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {# Affichage des erreurs pour ce champ précis. #}
+      {{ form_errors(form.date) }}
+
+      <div class="col-sm-4">
+        {# Génération de l'input. #}
+        {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+<div class="form-group">
+      {# Génération du label. #}
+      {{ form_label(form.dateFin, "Date de fin", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {# Affichage des erreurs pour ce champ précis. #}
+      {{ form_errors(form.dateFin) }}
+
+      <div class="col-sm-4">
+        {# Génération de l'input. #}
+        {{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+
+{{ form_rest(form) }}
+
+{{ form_end(form) }}
+</div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+  <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+  <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+  <script src="{{ asset('bundles/LTPhotos/js/moment-with-locales.min.js') }}"></script>
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/1.10.10/sorting/datetime-moment.js"></script>
+
+  <script type="text/javascript" class="init">
+    $(document).ready(function() {
+      var table = $('#event_datatable');
+
+      $('#event_datatable tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('success') ) {
+            $(this).removeClass('success');
+	    $("#btncont").addClass('disabled');
         }
         else {
-            $(".selected").removeClass('selected');
-            $(this).addClass('selected');
+            $(".success").removeClass('success');
+            $(this).addClass('success');
+	    $("#btncont").removeClass('disabled');
+	    $("#btncont").attr("href", Routing.generate('lt_photos_upload_photos_expose', { eventSlug: this.firstChild.innerHTML }));
         }
-    } );
- 
-} );
-
-</script>
+      });
+    });
+  </script>
 {% endblock %}

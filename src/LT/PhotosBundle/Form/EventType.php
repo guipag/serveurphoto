@@ -18,11 +18,11 @@ class EventType extends AbstractType
             ->add('name')
             ->add('date', 'datePicker', array())
 	    ->add('dateFin', 'datePicker', array())
-	    ->add('categories', 'collection', array(
+	   /* ->add('categories', 'collection', array(
 					'type' => new CategoryType(),
 					'allow_add'    => true,
         				'allow_delete' => true,
-					'by_reference' => false))
+					'by_reference' => false))*/
         ;
     }
 

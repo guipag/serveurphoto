@@ -19,42 +19,31 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 class PhotoController extends Controller {
     public function uploadAction(Request $request) {
-        $photo = new Photo();
-
-        $photograph = $this->getUser()->getPhotograph();
-
-        $photo->setPhotograph($photograph);
-
-        $form = $this->get('form.factory')->create(new PhotoType, $photo);
-
         $new_event = new Event();
-        $form_event = $this->createForm(new EventType(), $new_event, array(
-                    'action' => $this->generateUrl('event_create'),
-                    'method' => 'POST',
-        ));
+        $form_event = $this->createForm(new EventType(), $new_event);
 
         $form_event->add('submit', 'submit', array('label' => 'Créer'));
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form_event->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            if (!in_array($photograph, $photo->getEvent()->getPhotographs()->toArray()))
-                $photo->getEvent()->addPhotograph($photo->getPhotograph());
-
-            $em->persist($photo);
+            $em->persist($new_event);
             $em->flush();
         }
-
-        $events = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Event')->findAllDateDesc();
 
 	$datatable = $this->get('app.datatable.event');
     	$datatable->buildDatatable();
 
-        return $this->render('LTPhotosBundle:Default:upload.html.twig', array('form' => $form->createView(), 'form_event' => $form_event->createView(), 'events' => $events, 'datatable' => $datatable));
+        return $this->render('LTPhotosBundle:Default:upload.html.twig', array('form' => $form_event->createView(), 'datatable' => $datatable));
     }
 
     public function uploadPhotosAction(Request $request, $eventSlug, $categorySlug = null) {
         $repository = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Event');
-        $event = $repository->findOneBy(array('slug' => $eventSlug));
+
+	if (is_numeric($eventSlug))
+	    $event = $repository->findOneBy(array('id' => $eventSlug));
+	else
+            $event = $repository->findOneBy(array('slug' => $eventSlug));
+
         $photo = new Photo();
 
 	if ($categorySlug !== null) {
@@ -126,7 +115,7 @@ class PhotoController extends Controller {
 
         $this
           ->get('event_dispatcher')
-          ->dispatch(NotifMailEvents::onPhotosPost, $notif)
+          ->dispatch(NotifMailEvents::ONPHOTOSPOST, $notif)
         ;
 	return $this->render('LTPhotosBundle:Default:valideImport.html.twig');
     }

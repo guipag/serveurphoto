@@ -126,6 +126,15 @@ lt_photos_admin_search_events:
     path: /admin/event/search
     defaults: { _controller:LTPhotosBundle:Ajax:eventAdminSearch }
 
+lt_photos_upload_photos_expose:
+    path: /upload/{eventSlug}
+    methods: [ get ]
+    defaults: { _controller:LTPhotosBundle:Photo:uploadPhotos }
+    requirements:
+        eventSlug: \d+
+    options:
+        expose: true
+
 lt_photos_upload_photos:
     path: /upload/{eventSlug}/{categorySlug}
     defaults: { _controller:LTPhotosBundle:Photo:uploadPhotos, categorySlug = null }
