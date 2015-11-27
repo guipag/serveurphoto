@@ -17,7 +17,7 @@ class PhotoRepository extends EntityRepository {
     $qb    = $this->createQueryBuilder('p');
 
     $qb->join('p.event','e')->addSelect('e');
-    if ($category != null)
+    if ($category !== null)
       $qb->join('p.category','c')->addSelect('c');
 
     $qb->where('e.id = :id_event')->setParameter('id_event', $event->getId());
@@ -36,7 +36,7 @@ class PhotoRepository extends EntityRepository {
     $qb    = $this->createQueryBuilder('p');
 
     $qb->join('p.event','e')->addSelect('e');
-    if ($category != null)
+    if ($category !== null)
       $qb->join('p.category','c')->addSelect('c');
 
     $qb->join('p.photograph','h')->addSelect('h');

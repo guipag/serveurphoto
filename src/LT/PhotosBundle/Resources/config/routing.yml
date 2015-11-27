@@ -128,7 +128,7 @@ lt_photos_admin_search_events:
 
 lt_photos_upload_photos_expose:
     path: /upload/{eventSlug}
-    methods: [ get ]
+    methods: [ get, post ]
     defaults: { _controller:LTPhotosBundle:Photo:uploadPhotos }
     requirements:
         eventSlug: \d+
@@ -137,6 +137,7 @@ lt_photos_upload_photos_expose:
 
 lt_photos_upload_photos:
     path: /upload/{eventSlug}/{categorySlug}
+    methods: [ get, post ]
     defaults: { _controller:LTPhotosBundle:Photo:uploadPhotos, categorySlug = null }
 
 LTUserBundle_user:
