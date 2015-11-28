@@ -22,8 +22,6 @@ class PhotoController extends Controller {
         $new_event = new Event();
         $form_event = $this->createForm(new EventType(), $new_event);
 
-        $form_event->add('submit', 'submit', array('label' => 'Créer'));
-
         if ($form_event->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($new_event);

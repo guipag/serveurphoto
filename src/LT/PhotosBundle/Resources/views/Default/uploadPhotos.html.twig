@@ -67,6 +67,7 @@ div.table .file-row:nth-child(odd) {
   <div class="tab-pane fade in active" id="accueil">
     <p>Pour appliquer un tag à toutes les photos que vous allez importez, saisissez-les ci-dessous.</p>
     <p>Attention, tous les tags sont vérifiés à la validation des photos. Si un tag n'est pas aproprié le dossier entier ne sera pas validé !</p>
+    <p>Les deux premiers tags sont toujours le nom de l'évènement et le nom sans caractère spéciaux. Même si vous les enlevez ils seront remis lors du téléchargement. C'est pour le fonctionnement interne du serveur.</p>
       <ul id="myTags">
         <li>{{ event.name }}</li>
         <li>{{ event.slug }}</li>
@@ -76,7 +77,6 @@ div.table .file-row:nth-child(odd) {
 
   <div class="tab-pane fade" id="livres">
     <p>Maintenant vous pouvez sélectionner les photos à importer !</p>
-
 
     <div id="continue">
       <button class="btn btn-primary btnPrevious">Modifier les tags pour un autre import</button>
