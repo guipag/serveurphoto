@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Asset;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Photo
@@ -64,6 +65,11 @@ class Photo
      */
     private $censured = false;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="LT\PhotosBundle\Entity\Tag", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $tags;
 
     /**
      * @Asset\File(maxSize="20000000")
@@ -94,6 +100,10 @@ class Photo
      * @Gedmo\Timestampable(on="update")
      */
     private $updated_at;
+
+    public function __construct() {
+	$this->tags = new ArrayCollection();
+    }
 
     /**
      * @ORM\PrePersist()
@@ -321,4 +331,16 @@ class Photo
 	return $this;
     }
 
+    public function addTag(Tag $tag) {
+	$this->tags[] = $tag;
+	return $this;
+    }
+
+    public function removeTag(Tag $tag) {
+	$this->tags->remove($tag);
+    }
+
+    public function getTags() {
+	return $this->tags;
+    }
 }

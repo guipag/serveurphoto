@@ -9,6 +9,7 @@ use LT\PhotosBundle\Entity\Photo;
 use LT\PhotosBundle\Entity\Event;
 use LT\PhotosBundle\Entity\Photograph;
 use LT\PhotosBundle\Entity\Category;
+use LT\PhotosBundle\Entity\Tag;
 use LT\PhotosBundle\Form\PhotoType;
 use LT\PhotosBundle\Form\EventType;
 use LT\PhotosBundle\NotifMail\NotifMailEvents;
@@ -53,30 +54,38 @@ class PhotoController extends Controller {
                         ->add('files', 'file', array('attr' => array('multiple' => true)))
                         ->getForm();
 
-        $form->handleRequest($request);
-
         if ($request->isXmlHttpRequest()) {
-            $data = $form->getData();
-
             $photograph = $this->getUser()->getPhotograph();
             $em = $this->getDoctrine()->getManager();
 	    $photos = array();
 
-            foreach($request->files->get('file') as $file) {
-                $photos[] = new Photo();
-		$photo = end($photos);
-                $photo->setFile(reset($file));
-                $photo->setPhotograph($photograph);
-                $photo->setValid(false);
+            $file = $request->files->get('file');
 
-		if ($categorySlug !== null)
-		    $photo->setCategory($category);
+            $photos[] = new Photo();
+	    $photo = end($photos);
+            $photo->setFile($file);
+            $photo->setPhotograph($photograph);
+            $photo->setValid(false);
 
-                $event->addPhoto($photo);
-                if (!in_array($photograph, $photo->getEvent()->getPhotographs()->toArray()))
-                    $photo->getEvent()->addPhotograph($photo->getPhotograph());
-                $em->persist($event);
-            }
+	    $tags = explode(",", $request->get('tags'));
+	    $tagRepo = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Tag');
+
+	    foreach ($tags as $tag) {
+		$tagO = $tagRepo->findOneByTag($tag);
+		if ($tagO == null) {
+		    $tagO = new Tag();
+		    $tagO->setTag($tag);
+		}
+		$photo->addTag($tagO);
+	    }
+
+	    if ($categorySlug !== null)
+		$photo->setCategory($category);
+
+            $event->addPhoto($photo);
+            if (!in_array($photograph, $photo->getEvent()->getPhotographs()->toArray()))
+                $photo->getEvent()->addPhotograph($photo->getPhotograph());
+            $em->persist($event);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
