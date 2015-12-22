@@ -29,4 +29,27 @@ class MaintenanceController extends Controller
 
 	return $this->render('LTPhotosBundle:Maintenance:fusionPhotograph.html.twig');
     }
+
+    public function censuredPhotosAction(Request $request) {
+	$repo = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Photo');
+
+	$photos = $repo->findByCensured(true);
+
+	return $this->render('LTPhotosBundle:Maintenance:deleteCensuredPhotos.html.twig', array('photos' => $photos));
+    }
+
+    public function deleteCensuredPhotosAction(Request $request) {
+        $repo = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Photo');
+	$em = $this->getDoctrine()->getManager();
+
+        $photos = $repo->findByCensured(true);
+
+	foreach ($photos as $photo)
+            $em->remove($photo);
+
+	$em->flush();
+
+	return $this->redirectToRoute('maintenance_censured');
+    }
+
 }

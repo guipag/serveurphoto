@@ -55,19 +55,6 @@
   </div>
 
 
-  <div class="form-group">
-      {# Génération du label. #}
-      {{ form_label(edit_form.categories, "Categories", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
-
-      {# Affichage des erreurs pour ce champ précis. #}
-      {{ form_errors(edit_form.categories) }}
-
-      <div class="col-sm-4">
-        {# Génération de l'input. #}
-        {{ form_widget(edit_form.categories, {'attr': {'class': ''}}) }}
-      </div>
-  </div>
-
 {{ form_widget(edit_form.submit, {'attr': {'class': 'btn btn-default'}}) }}
 
 {{ form_rest(edit_form) }}
@@ -97,7 +84,7 @@
   <tbody>
   {% for photograph in entity.getPhotographs %}
     <tr>
-      <td>{{ photograph.name }}</td>
+      <td>{{ photograph.nickname }}</td>
       <td>{{ nbrPhotos[photograph.nickname] }}</td>
       <td>{{ nbrPhotosCensured[photograph.nickname] }}</td>
       <td>{{ nbrPhotosToValidate[photograph.nickname] }}</td>

@@ -171,3 +171,13 @@ event_bulk_invisible:
     path: /bulk/invisible/event
     methods: [ post ]
     defaults: { _controller:LTPhotosBundle:Event:bulkInvisible }
+
+maintenance_censured:
+    path: /maintenance/censured
+    methods: [ get, post ]
+    defaults: { _controller:LTPhotosBundle:Maintenance:censuredPhotos }
+
+maintenance_censured_delete:
+    path: /maintenance/censured/delete
+    methods: [ get, post ]
+    defaults: { _controller:LTPhotosBundle:Maintenance:deleteCensuredPhotos }

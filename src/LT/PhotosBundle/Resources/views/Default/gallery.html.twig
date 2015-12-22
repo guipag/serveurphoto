@@ -3,46 +3,59 @@
 {% block stylesheets %}
 {{ parent() }}
 <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-<style type="text/css">
-#portfolio {
-  margin: 0 auto;
-}
-.bloc {
-  margin: 5px;
-  height: 100px;
-  width: 150px;
-}
-.utility {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: rgba(66,139,202,0.75);
-  width: 100%;
-  height: 100%;
-  padding: 2%;
-  display: none;
-  text-align: center;
-  color: #fff !important;
+<link rel="stylesheet" href="{{ asset("bundles/LTPhotos/css/filtrify.css") }}">
+
+<style>
+.isotope-item {
   z-index: 2;
 }
 
-.thumbnail2 {
-    //position:relative;
-    overflow:hidden;
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
 }
- 
-.caption {
-    position:absolute;
-    top:0;
-    right:0;
-    background:rgba(216, 216, 216, 0.75);
-    width:100%;
-    height:100%;
-    padding:2%;
-    display: none;
-    text-align:center;
-    color:#fff !important;
-    z-index:10;
+
+/**** Isotope CSS3 transitions ****/
+
+.isotope,
+.isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+       -o-transition-property:         top, left, opacity;
+          transition-property:         transform, opacity;
+}
+
+/**** disabling Isotope CSS3 transitions ****/
+
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+#container {
+  list-style: none;
 }
 </style>
 {% endblock %}
@@ -50,50 +63,32 @@
 {% block body %}
 {{ wo_render_breadcrumbs() }}
 
-<center><h4>
-  <div class="btn-group">
-      <a class="btn btn-default" href="">Toutes</a>
-    {% for photograph in photographs %}
-      <a class="btn btn-default" href="#{{ photograph.id }}">Photos de {{ photograph.nickname }}</a>
-    {% endfor %}
-  </div>
-</center></h4>
+<div class="well">
+  <div id="placeHolder"></div>
+</div>
 
-<div id="portfolio">
-  <div id="links">
+<ul id="container">
   {% for photo in photos %}
-  <div class="thumbnail2">
-    <div class="bloc {{ photo.photograph.id }}">
-      <a href="{{ asset(photo.getWebPath | imagine_filter('rotate_gallery')) }}" data-prototype="&lt;span class=&quot;glyphicon glyphicon-download-alt&quot;&gt;Test&lt;/span&gt;">
-        <img src="{{ asset(photo.getWebPath | imagine_filter('my_thumb')) }}" id="thumb" width="150px" height="100px">
-      </a>
-    </div>
-  </div>
+  <li {% if photo.tags|length is not empty %}data-tag="{% for tag in photo.tags %}{{ tag.tag ~ ', ' }}{% endfor %}" {% endif %}data-photographe="{{ photo.photograph.nickname }}">
+    <a href="{{ asset(photo.getWebPath | imagine_filter('rotate_gallery')) }}">
+      <img src="{{ asset(photo.getWebPath | imagine_filter('my_thumb')) }}" id="thumb" width="150px" height="100px">
+    </a>
+  </li>
   {% endfor %}
-  </div>
-</div>
+</ul>
 
-<div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Télécharger...
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-{% for photograph in photographs %}
-    <li><a href="{{ path('lt_photos_download', {'event': event.id, 'photograph': photograph.id}) }}">Les photos de {{ photograph.nickname }}</a></li>
-{% endfor %}
-  </ul>
-</div>
-
-<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+<div id="blueimp-gallery" class="blueimp-gallery">
+    <!-- The container for the modal slides -->
     <div class="slides"></div>
+    <!-- Controls for the borderless lightbox -->
     <h3 class="title"></h3>
     <a class="prev">‹</a>
     <a class="next">›</a>
     <a class="close">×</a>
     <a class="play-pause"></a>
-    <a class="download">o</a>
     <ol class="indicator"></ol>
+    <!-- The modal dialog, which will be used to wrap the lightbox content -->
     <div class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -117,69 +112,59 @@
     </div>
 </div>
 
-<script src="{{ asset("bundles/LTPhotos/js/masonry.js") }}"></script>
-<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="{{ asset("bundles/LTPhotos/js/filtrify.min.js") }}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.js"></script>
 
 <script type="text/javascript">
-jQuery(function($){
-	var portfolio = $('#portfolio');
-	portfolio.masonry({
-		isAnimated: true,
-		itemSelector:'.bloc:not(.hidden)',
-		isFitWidth:true,
-		columnWidth:160
-	});
+var version1dejQuery = $.noConflict(true);
 
-	$('h4 a').click(function(e){
-		var cls = $(this).attr('href').replace('#','');
-		portfolio.find('.bloc').removeClass('hidden'); 
-		portfolio.find('.bloc:not(.'+cls+')').addClass('hidden');
-		portfolio.masonry('reload'); 
-		portfolio.find('.'+cls).show(500);
-		portfolio.find('.bloc:not(.'+cls+')').hide(500);
+(function($) {
+$(function() {
+    var container = $("#container");
+    
+    container.isotope({
+        itemSelector : 'ul#container > li',
+        layoutMode : 'fitRows'
+    });
+    
+    $.filtrify("container", "placeHolder", {
+        hide     : false,
+        callback : function ( query, match, mismatch ) {
+            container.isotope({ filter : $(match) });
+        },
+	close : true
+    });
 
-		location.hash = cls;
-		e.preventDefault(); 
-	});
-
-	var bloc = portfolio.find('.bloc:first'); 
-	var cssi = {width:bloc.width(),height:bloc.height()};
-	var cssf = null; 
-
-	if(location.hash != ''){
-		$('a[href="'+location.hash+'"]').trigger('click');
-	}
-})
+});
+})(version1dejQuery);
 </script>
 
-<script type="text/javascript">
-document.getElementById('links').onclick = function (event) {
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+
+<script type"text/javascript">
+var version2dejQuery = $.noConflict(true);
+
+(function($) {
+//on utilise ici la version 2 de jquery avec $
+
+document.getElementById('container').onclick = function (event) {
     event = event || window.event;
     var target = event.target || event.srcElement,
         link = target.src ? target.parentNode : target,
-        options = {index: link, event: event, continuous: false, slideshowInterval: 5000, fullScreen: false, titleProperty: 'data-prototype',},
-	links = this.querySelectorAll('.bloc:not(.hidden) a');
-        //links = this.getElementsByTagName('a');
+        options = {index: link, event: event};
+        
+    var links = $.makeArray($("#container li").filter(function () {
+	if ($(this).css("display") != "none") {
+	    return $(this);
+	}
+    }).children());
+
     blueimp.Gallery(links, options);
 };
-</script>
 
-<script type="text/javascript">
-$(document).ready(function() {
-
- $("[rel='tooltip']").tooltip();    
- 
-    $('.thumbnail2').hover(
-        function(){
-            $(this).find('.caption').slideDown(250); //.fadeIn(250)
-        },
-        function(){
-            $(this).find('.caption').slideUp(250); //.fadeOut(205)
-        }
-    ); 
-
-
-});
+})(version2dejQuery);
 </script>
 
 {% endblock %}
