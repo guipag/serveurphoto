@@ -19,7 +19,7 @@
       <td>{{ entity.slug }}</td>
       <td>{% if entity.date %}{{ entity.date|date('Y-m-d H:i:s') }}{% endif %}</td>
       <td>
-        <a class="btn btn-primary" href="{{ path('lt_photos_base') ~ scolarYear(entity.date) ~ '/' ~ entity.slug }}">voir</a>
+        <a class="btn btn-primary" href="{{ path('lt_photos_base') ~ 'admin/' ~ scolarYear(entity.date) ~ '/' ~ entity.slug ~ '/gallery' }}">voir</a>
         <a class="btn btn-primary" href="{{ path('event_edit', { 'id': entity.id }) }}">éditer</a>
       </td>
     </tr>

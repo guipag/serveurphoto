@@ -65,4 +65,16 @@ class EventRepository extends EntityRepository
 
 	return $qb->getQuery()->getResult();
     }
+
+    public function findAllTags() {
+	$qb = $this->createQueryBuilder('a');
+
+	$qb->leftJoin('a.photos', 'pho')
+	   ->leftJoin('pho.tags', 'tag')
+           ->addSelect('tag');
+
+	return $qb
+	  ->getQuery()
+	  ->getResult();
+    }
 }

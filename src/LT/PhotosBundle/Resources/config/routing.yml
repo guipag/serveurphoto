@@ -181,3 +181,8 @@ maintenance_censured_delete:
     path: /maintenance/censured/delete
     methods: [ get, post ]
     defaults: { _controller:LTPhotosBundle:Maintenance:deleteCensuredPhotos }
+
+tag_suggest:
+    path: /tag/suggest
+    methods: [ get ]
+    defaults: { _controller:LTPhotosBundle:Photo:tagSuggest }
