@@ -50,14 +50,14 @@ class EventSearch {
     return $this;
   }
 
-  public function setTitle($title) {
-    $this->title = $title;
+  public function setName($title) {
+    $this->name = $name;
 
     return $this;
   }
 
-  public function getTitle() {
-    return $this->title;
+  public function getName() {
+    return $this->name;
   }
 
   public function setSlug($slug) {

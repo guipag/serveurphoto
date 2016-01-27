@@ -11,6 +11,9 @@ use LT\PhotosBundle\Entity\Event;
 use LT\PhotosBundle\Entity\Photograph;
 use LT\PhotosBundle\Entity\Category;
 
-class DefaultController extends Controller {
-
+class ElasticController extends Controller {
+  public function searchAction($request) {
+    //controller de recherche de quelque chose depuis la barre de navigation
+    return $this->render('LTPhotosBundle:Elastic:search.html.twig');
+  }
 }

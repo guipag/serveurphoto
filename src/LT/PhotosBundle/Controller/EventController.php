@@ -11,6 +11,9 @@ use LT\PhotosBundle\Entity\Event;
 use LT\PhotosBundle\Entity\Photograph;
 use LT\PhotosBundle\Form\EventType;
 
+use LT\PhotosBundle\Model\EventSearch;
+use LT\PhotosBundle\Form\Type\EventSearchType;
+
 /**
  * Event controller.
  *
@@ -393,4 +396,30 @@ class EventController extends Controller
 
         return new Response("Bad Request", 400);
     }
+
+    public function listAction(Request $request) {
+	$eventSearch = new EventSearch();
+
+        $eventSearchForm = $this->get('form.factory')
+            ->createNamed(
+                '',
+                'event_search_type',
+                $eventSearch,
+                array(
+                    'action' => $this->generateUrl('event_list'),
+                    'method' => 'GET'
+                )
+            );
+        $eventSearchForm->handleRequest($request);
+        $eventSearch = $eventSearchForm->getData();
+
+        $elasticaManager = $this->container->get('fos_elastica.manager');
+        $results = $elasticaManager->getRepository('LTPhotosBundle:Event')->search($eventSearch);
+
+        return $this->render('LTPhotosBundle:Event:list.html.twig',array(
+            'results' => $results,
+            'eventSearchForm' => $eventSearchForm->createView(),
+        ));
+    }
+
 }

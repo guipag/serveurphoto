@@ -42,3 +42,14 @@ services:
         class: LT\PhotosBundle\Datatables\EventDatatable
         tags:
             - { name: sg.datatable.view }
+
+    form.type.event_search:
+        class: LT\PhotosBundle\Form\Type\EventSearchType
+        tags:
+            - { name: form.type, alias: event_search_type }
+
+    event_search_provider:
+        class: LT\PhotosBundle\Entity\SearchRepository\EventRepository
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments: [LT\PhotosBundle\Entity\Event]

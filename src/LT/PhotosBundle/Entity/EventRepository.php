@@ -77,4 +77,33 @@ class EventRepository extends EntityRepository
 	  ->getQuery()
 	  ->getResult();
     }
+
+    public function search(EventSearch $eventSearch) {
+	if ($eventSearch->getName() != null && $eventSearch != '' {
+	    $query = new \Elastica\Query\Match();
+	    $query->setFieldQuery('event.name', $eventSearch->getName());
+	    $query->setFieldFuzziness('event.name', 0.7);
+            $query->setFieldMinimumShouldMatch('event.name', '80%');
+        }
+	else {
+	    $query = new \Elastica\Query\Match();
+	}
+	$baseQuery = $query;
+
+	$boolFilter = new \Elastica\Filter\Bool();
+
+	if (null !== $eventSearch->getDateFrom() && null !== $eventSearch->getDateTo())
+	    $boolFilter->addMust(new \Elastica\Filter\Range('date',
+		array(
+		      'gte' => \ElsaticaUtil::convertDate($eventSearch->getDateFrom()->getTimestamp()),
+                      'lte' => \ElsaticaUtil::convertDate($eventSearch->getDateTo()->getTimestamp()),
+		)
+	    ));
+	}
+
+        $filtered = new \Elastica\Query\Filtered($baseQuery, $boolFilter);
+        $query = \Elastica\Query::create($filtered);
+
+        return $this->find($query);
+    }
 }

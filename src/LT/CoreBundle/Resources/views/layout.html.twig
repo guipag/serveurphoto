@@ -8,8 +8,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <!--<link href="//raw.github.com/jharding/typeahead.js-bootstrap.css/master/typeahead.js-bootstrap.css" rel="stylesheet" media="screen">-->
-    <script src="{{ asset('bundles/LTPhotos/js/typeahead.bundle.js') }}"></script>
     {% block stylesheets %}
          <link rel="stylesheet" href="{{ asset('bundles/LTPhotos/css/style.css') }}">
     {% endblock %}
@@ -36,50 +34,6 @@
         {% endblock %}  
       </section>  
     </div>
-
-<script type="text/javascript">
-
-$(document).ready(function(){
-  var suggestUrl = $('#search').attr('data-suggest');
-  $('#search').typeahead({
-    minLength: 3,
- 
-    source: function(query, process) {
-      var $this = this;
-      $.ajax({
-        url: suggestUrl,
-        type: 'GET',
-        data: {
-          search: query,
-        },
-        success: function(data) {
-          var reversed = {};
-          var suggests = [];
- 
-          $.each(data, function(id, elem) {
-            reversed[elem.suggest] = elem;
-            suggests.push(elem.suggest);
-          });
- 
-          $this.reversed = reversed;
- 
-          process(suggests);
-        }
-      })
-    },
- 
-    updater: function(item) {
-      var elem = this.reversed[item];
- 
-      return elem.tag;
-    },
- 
-    matcher: function() {
-      return true;
-    }
-  });
-});
-</script>
 
     <footer class="footer">
       <div class="container">

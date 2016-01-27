@@ -186,3 +186,8 @@ tag_suggest:
     path: /tag/suggest
     methods: [ get ]
     defaults: { _controller:LTPhotosBundle:Photo:tagSuggest }
+
+event_list:
+    path: /event/list
+    methods: [ get ]
+    defaults: { _controller:LTPhotosBundle:Event:list }
