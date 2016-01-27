@@ -2,6 +2,61 @@
 
 {% block body %}
 
-{{ form(eventSearchForm) }}
+
+<div class="well">
+  {{ form_start(eventSearchForm, {'attr': {'class': 'form-horizontal'}}) }}
+  {{ form_errors(eventSearchForm) }}
+
+  <div class="form-group">
+      {{ form_label(eventSearchForm.name, "Nom de l'évènement :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_errors(eventSearchForm.name) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(eventSearchForm.name, {'attr': {'class': 'form-control'}}) }}
+      </div>
+  </div>
+
+  <div class="form-group">
+      {{ form_label(eventSearchForm.dateFrom, "Entre le :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_errors(eventSearchForm.dateFrom) }}
+
+      <div class="col-sm-4">
+        {# Génération de l'input. #}
+        {{ form_widget(eventSearchForm.dateFrom, {'attr': {'class': 'form-control'}}) }}
+      </div>
+  </div>
+
+  <div class="form-group">
+      {{ form_label(eventSearchForm.dateTo, "Et le :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_errors(eventSearchForm.dateTo) }}
+
+      <div class="col-sm-4">
+        {# Génération de l'input. #}
+        {{ form_widget(eventSearchForm.dateTo, {'attr': {'class': 'form-control'}}) }}
+      </div>
+  </div>
+
+  {{ form_rest(eventSearchForm) }}
+  {{ form_end(eventSearchForm) }}
+</div>
+
+<div class="row">
+  {% for event in results %}
+    <div class="col-sm-6 col-md-3">
+      <a href="{{ path('lt_photos_base') ~ scolarYear(event.date) ~ '/' ~ event.slug }}">
+        <div class="thumbnail">
+          <img src="{{ asset(cover(event).getWebPath | imagine_filter('front_thumb')) }}" style="height: 180px; width: 100%; display:block;">
+          <div class="caption">
+            <h4>{{ event.name }}</h4>
+            <p>{{ event.date|date('d-m-Y') }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+
+
+
 
 {% endblock %}

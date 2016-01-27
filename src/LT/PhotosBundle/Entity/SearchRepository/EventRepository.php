@@ -14,16 +14,16 @@ use LT\PhotosBundle\Model\EventSearch;
 class EventRepository extends Repository
 {
     public function search(EventSearch $eventSearch) {
+	$boolQuery = new \Elastica\Query\BoolQuery();
+
 	if ($eventSearch->getName() != null && $eventSearch != '') {
 	    $query = new \Elastica\Query\Match();
 	    $query->setFieldQuery('event.name', $eventSearch->getName());
 	    $query->setFieldFuzziness('event.name', 0.7);
             $query->setFieldMinimumShouldMatch('event.name', '80%');
+	    $boolQuery->addShould($query);
         }
-	else {
-	    $query = new \Elastica\Query\Match();
-	}
-	$baseQuery = $query;
+	$baseQuery = $boolQuery;
 
 	$boolFilter = new \Elastica\Filter\Bool();
 
@@ -35,11 +35,18 @@ class EventRepository extends Repository
 		)
 	    ));
 	}
+	else {
+	    $boolFilter->addMust(
+                new \Elastica\Filter\NumericRange('date', array(
+                    'lte' => date('c'),
+                ))
+            );
+	}
 
         $filtered = new \Elastica\Query\Filtered($baseQuery, $boolFilter);
 
-        $query = \Elastica\Query::create($filtered);
+        //$query = \Elastica\Query::create($filtered);
 
-        return $this->find($query);
+        return $this->find($filtered);
     }
 }

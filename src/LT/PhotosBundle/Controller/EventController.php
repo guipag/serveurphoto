@@ -398,6 +398,9 @@ class EventController extends Controller
     }
 
     public function listAction(Request $request) {
+
+	/* TODO : s'il n'y a qu'un seul résultat venant d'une recherche de la barre d'adresse rediriger vers le bon event */
+
 	$eventSearch = new EventSearch();
 
         $eventSearchForm = $this->get('form.factory')
