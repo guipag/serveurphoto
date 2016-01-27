@@ -414,12 +414,13 @@ class EventController extends Controller
         $eventSearch = $eventSearchForm->getData();
 
         $elasticaManager = $this->container->get('fos_elastica.manager');
-        $results = $elasticaManager->getRepository('LTPhotosBundle:Event')->search($eventSearch);
+        $repo = $elasticaManager->getRepository('LTPhotosBundle:Event');
+
+	$results = $repo->search($eventSearch);
 
         return $this->render('LTPhotosBundle:Event:list.html.twig',array(
             'results' => $results,
             'eventSearchForm' => $eventSearchForm->createView(),
         ));
     }
-
 }
