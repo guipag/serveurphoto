@@ -30,7 +30,7 @@ class MaintenanceController extends Controller
 	return $this->render('LTPhotosBundle:Maintenance:fusionPhotograph.html.twig');
     }
 
-    public function censuredPhotosAction(Request $request) {
+    public function censuredPhotosAction() {
 	$repo = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Photo');
 
 	$photos = $repo->findByCensured(true);

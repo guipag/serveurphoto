@@ -1,28 +1,28 @@
 {% extends 'LTCoreBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Photograph</h1>
+    <h1>{{ 'Photograph'|trans }}</h1>
 
     <table class="record_properties">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Id'|trans }}</th>
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>{{ 'Name'|trans }}</th>
                 <td>{{ entity.name }}</td>
             </tr>
             <tr>
-                <th>Firstname</th>
+                <th>{{ 'Firstname'|trans }}</th>
                 <td>{{ entity.firstname }}</td>
             </tr>
             <tr>
-                <th>Nickname</th>
+                <th>{{ 'Nickname'|trans }}</th>
                 <td>{{ entity.nickname }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>{{ 'Description'|trans }}</th>
                 <td>{{ entity.description }}</td>
             </tr>
         </tbody>
@@ -31,12 +31,12 @@
         <ul class="record_actions">
     <li>
         <a href="{{ path('photograph') }}">
-            Back to the list
+            {{ 'Back to the list'|trans }}
         </a>
     </li>
     <li>
         <a href="{{ path('photograph_edit', { 'id': entity.id }) }}">
-            Edit
+            {{ 'Edit'|trans }}
         </a>
     </li>
     <li>{{ form(delete_form) }}</li>

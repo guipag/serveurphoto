@@ -61,7 +61,7 @@ class PhotoController extends Controller {
 	    $photos = array();
 
             $file = $request->files->get('file');
-var_dump($file);exit(0);
+
             $photos[] = new Photo();
 	    $photo = end($photos);
             $photo->setFile($file);

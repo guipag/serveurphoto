@@ -420,7 +420,7 @@ class EventController extends Controller
         $repo = $elasticaManager->getRepository('LTPhotosBundle:Event');
 
 	$results = $repo->search($eventSearch);
-var_dump($eventSearch);
+
         return $this->render('LTPhotosBundle:Event:list.html.twig',array(
             'results' => $results,
             'eventSearchForm' => $eventSearchForm->createView(),

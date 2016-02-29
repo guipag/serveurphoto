@@ -1,7 +1,12 @@
-# src/LT/PhotosBundle/Resources/translations/messages.fr.yml
-
 Name: Nom
-Begining: Date de début
-Ending: Date de fin
-Update: Mettre à jour
+Begining: 'Date de début'
+Ending: 'Date de fin'
+Update: 'Mettre à jour'
 Delete: Supprimer
+Photograph: Photographe
+Id: Identifiant
+Firstname: Prénom
+Nickname: Surnom
+Description: Description
+'Back to the list': 'Retour à la liste'
+Edit: Editer
