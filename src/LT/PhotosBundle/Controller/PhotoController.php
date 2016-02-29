@@ -61,13 +61,13 @@ class PhotoController extends Controller {
 	    $photos = array();
 
             $file = $request->files->get('file');
-
+var_dump($file);exit(0);
             $photos[] = new Photo();
 	    $photo = end($photos);
             $photo->setFile($file);
+
             $photo->setPhotograph($photograph);
             $photo->setValid(false);
-
 	    $tags = explode(",", $request->get('tags'));
 	    $tagRepo = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Tag');
 
@@ -86,9 +86,7 @@ class PhotoController extends Controller {
             $event->addPhoto($photo);
             if (!in_array($photograph, $photo->getEvent()->getPhotographs()->toArray()))
                 $photo->getEvent()->addPhotograph($photo->getPhotograph());
-            $em->persist($event);
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($event);
 	    $em->flush();
 

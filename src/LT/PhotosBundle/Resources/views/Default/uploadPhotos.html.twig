@@ -3,8 +3,8 @@
 {{ parent() }}
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.css">
-<link href="{{ asset('bundles/ltphotos/css/jquery.tagit.css') }}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
+<link href="{{ asset('bundles/ltphotos/css/jquery.tagit.css') }}" rel="stylesheet" type="text/css">
 <style>
 #form {
 display: none;
@@ -67,10 +67,12 @@ div.table .file-row:nth-child(odd) {
   <div class="tab-pane fade in active" id="accueil">
     <p>Pour appliquer un tag à toutes les photos que vous allez importez, saisissez-les ci-dessous.</p>
     <p>Attention, tous les tags sont vérifiés à la validation des photos. Si un tag n'est pas aproprié le dossier entier ne sera pas validé !</p>
-    <p>Les deux premiers tags sont toujours le nom de l'évènement et le nom sans caractère spéciaux. Même si vous les enlevez ils seront remis lors du téléchargement. C'est pour le fonctionnement interne du serveur.</p>
+    <p>Il se peut qu'il y ai déjà des tags présents dans le champ de sélection, ils sont utiles à des fins d'indexage pour la fonction recherche du serveur. Vous pouvez les enlever mais ils seront automatiquement inséré lors du téléchargement des photos.</p>
       <ul id="myTags">
         <li>{{ event.name }}</li>
+{% if event.slug != event.name %}
         <li>{{ event.slug }}</li>
+{% endif %}
     </ul>
     <button class="btn btn-success btnNext">Suivant</button>
   </div>
@@ -162,7 +164,6 @@ div.table .file-row:nth-child(odd) {
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="{{ asset('bundles/ltphotos/js/tag-it.js') }}" type="text/javascript" charset="utf-8"></script>
 
-
 <script type="text/javascript">
 var previewNode = document.querySelector("#template");
 previewNode.id = "";
@@ -194,15 +195,12 @@ myDropzone.on("addedfile", function(file) {
   file.previewElement.querySelector("#tagsphoto").innerHTML = text;
 });
 
-// Update the total progress bar
 myDropzone.on("totaluploadprogress", function(progress) {
   document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
 });
 
 myDropzone.on("sending", function(file, xhr, formData) {
-  // Show the total progress bar when upload starts
   document.querySelector("#total-progress").style.opacity = "1";
-  // And disable the start button
   file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
 var elements = document.querySelectorAll('input[name$="tags"]');
 
@@ -214,15 +212,11 @@ for (var i = 0, ref = arr.length = elements.length; i < ref; i++) {
   formData.append('tags',arr);
 });
 
-// Hide the total progress bar when nothing's uploading anymore
 myDropzone.on("queuecomplete", function(progress) {
   document.querySelector("#total-progress").style.opacity = "0";
   document.querySelector("#continue").style.opacity = "1";
 });
 
-// Setup the buttons for all transfers
-// The "add files" button doesn't need to be setup because the config
-// `clickable` has already been specified.
 document.querySelector("#actions .start").onclick = function() {
   myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
 };
@@ -233,7 +227,10 @@ document.querySelector("#actions .cancel").onclick = function() {
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#myTags").tagit();
+var sampleTags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
+        $("#myTags").tagit({
+	    availableTags: sampleTags
+	});
     });
 </script>
 
@@ -248,3 +245,4 @@ $('.btnNext').click(function(){
 </script>
 
 {% endblock %}
+

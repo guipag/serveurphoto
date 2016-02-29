@@ -129,6 +129,7 @@ liip_imagine:
             quality: 100
             filters:
                 auto_rotate: ~
+                downscale: { max: [1980, 1080] }
 
 oneup_uploader:
     mappings:

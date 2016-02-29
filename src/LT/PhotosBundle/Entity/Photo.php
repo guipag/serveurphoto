@@ -209,6 +209,9 @@ class Photo
 	return $this->photograph;
     }
 
+    /**
+     * @param UploadedFile $file
+     */
     public function setFile(UploadedFile $file = null) {
 	$this->file = $file;
 	if (null !== $this->path) {

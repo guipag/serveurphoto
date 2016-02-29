@@ -37,6 +37,10 @@ event_censure:
     path: /{id}/censure/{photograph}
     defaults: { _controller:"LTPhotosBundle:Event:censure" }
 
+event_delete_photos:
+    path: /{id}/deletephotos/{photograph}
+    defaults: { _controller: "LTPhotosBundle:Event:deletePhotos" }
+
 event_valid:
     path: /{id}/valid/{photograph}
     defaults: { _controller:"LTPhotosBundle:Event:valid" }

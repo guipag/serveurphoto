@@ -17,7 +17,7 @@
 
   <div class="form-group">
       {# Génération du label. #}
-      {{ form_label(edit_form.name, "Nom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_label(edit_form.name, "Name", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
       {# Affichage des erreurs pour ce champ précis. #}
       {{ form_errors(edit_form.name) }}
@@ -30,7 +30,7 @@
 
   <div class="form-group">
       {# Génération du label. #}
-      {{ form_label(edit_form.date, "Date de début", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_label(edit_form.date, "Begining", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
       {# Affichage des erreurs pour ce champ précis. #}
       {{ form_errors(edit_form.date) }}
@@ -43,7 +43,7 @@
 
   <div class="form-group">
       {# Génération du label. #}
-      {{ form_label(edit_form.dateFin, "Date de fin", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      {{ form_label(edit_form.dateFin, "Ending", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
       {# Affichage des erreurs pour ce champ précis. #}
       {{ form_errors(edit_form.dateFin) }}
@@ -92,7 +92,7 @@
 	<a class="btn btn-primary" href="{{ path('lt_photos_base') ~ 'admin/' ~ scolarYear(entity.date) ~ '/' ~ entity.slug ~ '/gallery#' ~ photograph.id }}">voir</a>
 	<a class="btn btn-success" href="{{ path('event_valid', {'id': entity.id, 'photograph': photograph.id}) }}">valider</a>
 	<a class="btn btn-warning" href="{{ path('event_censure', {'id': entity.id, 'photograph': photograph.id}) }}">censurer</a>
-	<a class="btn btn-danger" href="#">supprimer</a>
+	<a class="btn btn-danger" href="{{ path('event_delete_photos', {'id': entity.id, 'photograph': photograph.id}) }}">supprimer</a>
         <a class="btn btn-primary" href="#">déplacer</a>
       </td>
     </tr>

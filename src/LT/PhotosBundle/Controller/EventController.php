@@ -303,7 +303,7 @@ class EventController extends Controller
                         ;
 
 	foreach ($photos as $photo) {
-	    $photo->setValid(false);
+	    $photo->setCensured(true);
 	    $em->persist($photo);
 	}
 
@@ -420,10 +420,33 @@ class EventController extends Controller
         $repo = $elasticaManager->getRepository('LTPhotosBundle:Event');
 
 	$results = $repo->search($eventSearch);
-
+var_dump($eventSearch);
         return $this->render('LTPhotosBundle:Event:list.html.twig',array(
             'results' => $results,
             'eventSearchForm' => $eventSearchForm->createView(),
         ));
+    }
+
+    public function deletePhotosAction(Request $request, Event $event, Photograph $photograph) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Photo');
+
+        $photos = $repository->createQueryBuilder('a')
+                                    ->select('a')
+                                    ->where('a.photograph = :photograph')
+                                    ->andWhere('a.event = :event')
+                                    ->setParameter('photograph', $photograph)
+                                    ->setParameter('event', $event)
+                                ->getQuery()
+                                ->getResult()
+                        ;
+
+        foreach ($photos as $photo) {
+            $em->remove($photo);
+        }
+
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('event_edit', array('id' => $event->getId())));
     }
 }
