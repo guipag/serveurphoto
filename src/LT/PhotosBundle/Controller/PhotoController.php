@@ -10,7 +10,6 @@ use LT\PhotosBundle\Entity\Event;
 use LT\PhotosBundle\Entity\Photograph;
 use LT\PhotosBundle\Entity\Category;
 use LT\PhotosBundle\Entity\Tag;
-use LT\PhotosBundle\Form\PhotoType;
 use LT\PhotosBundle\Form\EventType;
 use LT\PhotosBundle\NotifMail\NotifMailEvents;
 use LT\PhotosBundle\NotifMail\PhotosPostEvent;
@@ -73,7 +72,7 @@ class PhotoController extends Controller {
 
 	    foreach ($tags as $tag) {
 		$tagO = $tagRepo->findOneByTag($tag);
-		if ($tagO == null) {
+		if ($tagO === null) {
 		    $tagO = new Tag();
 		    $tagO->setTag($tag);
 		}

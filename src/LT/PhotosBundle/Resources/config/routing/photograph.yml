@@ -1,13 +1,16 @@
 photograph:
     path:     /
+    methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Photograph:index" }
 
 photograph_show:
     path:     /{id}/show
+    methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Photograph:show" }
 
 photograph_new:
     path:     /new
+    methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Photograph:new" }
 
 photograph_create:
@@ -17,6 +20,7 @@ photograph_create:
 
 photograph_edit:
     path:     /{id}/edit
+    methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Photograph:edit" }
 
 photograph_update:

@@ -1,5 +1,6 @@
 photograph_new_sa:
     path:     /new
+    methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Photograph:new" }
 
 photograph_create_sa:

@@ -128,7 +128,7 @@ class Category
     /**
      * Add photos
      */
-    public function addPhoto(Photo $photo) {
+    public function addPhotos($photos) {
 	$this->photos[] = $photos;
 
 	return $this;

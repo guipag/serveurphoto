@@ -1,13 +1,16 @@
 event:
     path:     /
+    methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Event:index" }
 
 event_show:
     path:     /{id}/show
+    methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Event:show" }
 
 event_new:
     path:     /new
+    methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Event:new" }
 
 event_create:
@@ -17,6 +20,7 @@ event_create:
 
 event_edit:
     path:     /{id}/edit
+    methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Event:edit" }
 
 event_update:
@@ -31,17 +35,21 @@ event_delete:
 
 event_deplace:
     path: /{id}/{photograph}
+    methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Event:deplace" }
 
 event_censure:
     path: /{id}/censure/{photograph}
+    methods: [ get, post ]
     defaults: { _controller:"LTPhotosBundle:Event:censure" }
 
 event_delete_photos:
     path: /{id}/deletephotos/{photograph}
+    methods: [ post, delete ]
     defaults: { _controller: "LTPhotosBundle:Event:deletePhotos" }
 
 event_valid:
     path: /{id}/valid/{photograph}
+    methods: [ get, post ]
     defaults: { _controller:"LTPhotosBundle:Event:valid" }
 

@@ -2,7 +2,6 @@
 
 namespace LT\PhotosBundle\Form\Type;
 
-use LT\PhotosBundle\Model\EventSearch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;

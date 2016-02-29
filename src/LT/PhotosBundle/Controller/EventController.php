@@ -12,7 +12,6 @@ use LT\PhotosBundle\Entity\Photograph;
 use LT\PhotosBundle\Form\EventType;
 
 use LT\PhotosBundle\Model\EventSearch;
-use LT\PhotosBundle\Form\Type\EventSearchType;
 
 /**
  * Event controller.

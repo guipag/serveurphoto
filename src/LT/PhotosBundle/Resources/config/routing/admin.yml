@@ -1,3 +1,4 @@
 lt_admin_index:
     path: /
+    methods: [ get ]
     defaults: { _controller:LTPhotosBundle:Admin:index }

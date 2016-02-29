@@ -2,8 +2,6 @@
 
 namespace LT\PhotosBundle\Model;
 
-use Symfony\Component\HttpFoundation\Request;
-
 class EventSearch {
   protected $name;
   protected $slug;

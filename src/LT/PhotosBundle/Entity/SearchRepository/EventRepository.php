@@ -16,7 +16,7 @@ class EventRepository extends Repository
     public function search(EventSearch $eventSearch) {
 	$boolQuery = new \Elastica\Query\BoolQuery();
 
-	if ($eventSearch->getName() != null && $eventSearch != '') {
+	if ($eventSearch->getName() !== null && $eventSearch != '') {
 	    $query = new \Elastica\Query\Match();
 	    $query->setFieldQuery('event.name', $eventSearch->getName());
 	    $query->setFieldFuzziness('event.name', 0.7);

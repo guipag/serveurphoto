@@ -70,30 +70,36 @@ lt_photos_contact:
 
 lt_photos_upload:
     path: /upload
+    methods: [ get, post ]
     defaults: { _controller:LTPhotosBundle:Photo:upload }
 
 lt_photos_validimport:
     path: /validimport/{eventSlug}
+    methods : [ get ]
     defaults: { _controller:LTPhotosBundle:Photo:validImport }
 
 lt_photos_help:
     path: /help
+    methods: [ get ]
     defaults: { _controller:LTPhotosBundle:Photo:help }
 
 lt_photos_delete_photo:
     path : /photo/delete/{photo}
+    methods: [ get, post ]
     defaults: { _controller:LTPhotosBundle:Photo:delete }
     requirements:
         photo: \d+
 
 lt_photos_censure_photo:
     path: /photo/censure/{photo}
+    methods: [ get, post ]
     defaults: { _controller:LTPhotosBundle:Photo:censure }
     requirements:
         photo: \d+
 
 lt_photos_valid_photo:
     path: /photo/valid/{photo}
+    methods: [ get, post ]
     defaults: { _controller:LTPhotosBundle:Photo:valid }
     requirements:
         photo: \d+
@@ -120,10 +126,12 @@ LTPhotosBundle_maintenance:
 
 lt_photos_search_events:
     path: /event/search
+    methods: [ get ]
     defaults: { _controller:LTPhotosBundle:Ajax:eventSearch }
 
 lt_photos_admin_search_events:
     path: /admin/event/search
+    methods: [ get ]
     defaults: { _controller:LTPhotosBundle:Ajax:eventAdminSearch }
 
 lt_photos_upload_photos_expose:
@@ -146,20 +154,24 @@ LTUserBundle_user:
 
 lt_show_profile:
     path: /profile/{id}
+    methods: [ get, post ]
     defaults: { _controller:LTUserBundle:Profile:show }
     requirements:
         id: \d+
 
 lt_user_profile_show:
     path: /profile/
+    methods: [ get, post ]
     defaults: { _controller:LTUserBundle:Profile:show }
 
 lt_photos_download:
     path: /download/{event}/{photograph}
+    methods: [ get ]
     defaults: { _controller:LTPhotosBundle:Photo:createZip, photograph = all }
 
 event_results:
     path: /results/event
+    methods: [ get ]
     defaults: { _controller:LTPhotosBundle:Event:results }
 
 event_bulk_delete:

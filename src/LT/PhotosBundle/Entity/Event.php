@@ -126,7 +126,7 @@ class Event
     }
 
     public function setCategories(ArrayCollection $categories) {
-        foreach ($categoriess as $category) {
+        foreach ($categories as $category) {
             $this->addCategory($category);
         }
 
