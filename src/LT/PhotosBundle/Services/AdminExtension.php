@@ -13,7 +13,7 @@ class AdminExtension extends \Twig_Extension {
 
   public function getFunctions() {
     return array(
-        'asPhotosToValidate' => new \Twig_Function_Method($this, 'asPhotosToValidateFunction'),
+	new \Twig_SimpleFunction('asPhotosToValidate', array($this, 'asPhotosToValidateFunction')),
                 );
   }
 

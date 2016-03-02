@@ -22,8 +22,8 @@ class LTScolardate extends \Twig_Extension {
 
     public function getFunctions() {
 	return array(
-		    'scolarYear' => new \Twig_Function_Method($this, 'getTextscolarDate'),
-		    'actualScolarYear' => new \Twig_Function_Method($this, 'getActualScolarYear')
+		    new \Twig_SimpleFunction('scolarYear', array($this, 'getTextscolarDate')),
+		    new \Twig_SimpleFunction('actualScolarYear', array($this, 'getActualScolarYear'))
 		);
     }
     public function getName() {

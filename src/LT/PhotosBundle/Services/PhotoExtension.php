@@ -13,7 +13,7 @@ class PhotoExtension extends \Twig_Extension {
 
   public function getFunctions() {
     return array(
-	'cover' => new \Twig_Function_Method($this, 'coverFunction'),
+	new \Twig_SimpleFunction('cover', array($this, 'coverFunction')),
 		);
   }
 
