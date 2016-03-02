@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use LT\PhotosBundle\Entity\Photograph;
 use LT\PhotosBundle\Form\PhotographType;
+use LT\PhotosBundle\Form\PhotographEditType;
 
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
@@ -156,9 +157,26 @@ class PhotographController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
+ 	foreach ($entity->getEvents() as $event) {
+          $nbrPhotoCensured = $em->getRepository('LTPhotosBundle:Photo')->createQueryBuilder('a')
+                                    ->select('COUNT(a)')
+                                    ->where('a.photograph = :photograph')
+                                    ->andWhere('a.event = :event')
+                                    ->andWhere('a.censured = :censured')
+                                    ->setParameter('photograph', $entity)
+                                    ->setParameter('event', $event)
+                                    ->setParameter('censured', true)
+                                ->getQuery()
+                                ->getSingleScalarResult()
+                        ;
+          $nbrPhotosCensured[$event->getId()] = $nbrPhotoCensured;
+        }
+
+
         return $this->render('LTPhotosBundle:Photograph:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+	    'nbrPhotosCensured' => $nbrPhotosCensured
         ));
     }
 
@@ -179,26 +197,10 @@ class PhotographController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-	foreach ($entity->getEvents() as $event) {
-          $nbrPhotoCensured = $em->getRepository('LTPhotosBundle:Photo')->createQueryBuilder('a')
-                                    ->select('COUNT(a)')
-                                    ->where('a.photograph = :photograph')
-                                    ->andWhere('a.event = :event')
-                                    ->andWhere('a.censured = :censured')
-                                    ->setParameter('photograph', $entity)
-                                    ->setParameter('event', $event)
-                                    ->setParameter('censured', true)
-                                ->getQuery()
-                                ->getSingleScalarResult()
-                        ;
-          $nbrPhotosCensured[$event->getId()] = $nbrPhotoCensured;
-        }
-
         return $this->render('LTPhotosBundle:Photograph:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-	    'nbrPhotosCensured' => $nbrPhotosCensured
+            'delete_form' => $deleteForm->createView()
         ));
     }
 
@@ -211,7 +213,7 @@ class PhotographController extends Controller
     */
     private function createEditForm(Photograph $entity)
     {
-        $form = $this->createForm(new PhotographType(), $entity, array(
+        $form = $this->createForm(new PhotographEditType(), $entity, array(
             'action' => $this->generateUrl('photograph_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

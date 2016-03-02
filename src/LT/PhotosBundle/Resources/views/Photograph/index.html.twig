@@ -1,17 +1,17 @@
 {% extends 'LTCoreBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h3>Liste des photographes</h3>
+    <h3>{{ 'Photographers list'|trans }}</h3>
 
     <table class="table table-bordered table-striped table-condensed table-responsive">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Surnom</th>
-                <th>Description</th>
-                <th>Actions</th>
+                <th>{{ 'Id'|trans }}</th>
+                <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'Firstname'|trans }}</th>
+                <th>{{ 'Nickname'|trans }}</th>
+                <th>{{ 'Description'|trans }}</th>
+                <th>{{ 'Actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -24,9 +24,9 @@
                 <td>{{ entity.description }}</td>
                 <td>
                   <a class="btn btn-primary" href="{{ path('photograph_edit', { 'id': entity.id }) }}">éditer</a>
-		{% if entity.user.username == true %}
+		{#{% if entity.user.username == true %}
 		  <a class="btn btn-danger" href="{{ path('lt_photos_index', { '_switch_user': entity.user.username }) }}">usurpation</a>
-		{% endif %}
+		{% endif %}#}
                 </td>
             </tr>
         {% endfor %}

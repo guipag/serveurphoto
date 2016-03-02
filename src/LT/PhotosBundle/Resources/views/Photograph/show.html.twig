@@ -3,7 +3,7 @@
 {% block body -%}
     <h1>{{ 'Photograph'|trans }}</h1>
 
-    <table class="record_properties">
+    <table class="table table-bordered table-striped table-condensed">
         <tbody>
             <tr>
                 <th>{{ 'Id'|trans }}</th>
@@ -28,17 +28,50 @@
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('photograph') }}">
-            {{ 'Back to the list'|trans }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('photograph_edit', { 'id': entity.id }) }}">
-            {{ 'Edit'|trans }}
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+<h1>Statistiques</h1>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <td>Evènement</td>
+      <td>Nombre de photos publiées</td>
+      <td>Nombre de photos censurées</td>
+      <td>Action</td>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for event in entity.getEvents %}
+      <tr>
+        <td>{{ event.name }}</td>
+        <td>{{ event.getPhotos|length }}</td>
+        <td>{{ nbrPhotosCensured[event.id] }}</td>
+        <td><a href="{{ path('event_edit', { 'id': event.id }) }}" class="btn btn-primary">Administrer <i class="glyphicon glyphicon-triangle-right"></i></a></td>
+      </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+
+{{ form_start(delete_form, {'attr': {'class': 'form form-horizontal'}}) }}
+
+
+<div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+  <div class="btn-group" role="group">
+    <a href="{{ path('photograph') }}" class="btn btn-default">{{ 'Back to the list'|trans }}</a>
+  </div>
+  <div class="btn-group" role="group">
+    <a href="{{ path('photograph_edit', { 'id': entity.id }) }}" class="btn btn-primary">{{ 'Edit'|trans }}</a>
+  </div>
+  <div class="btn-group" role="group">
+{{ form_widget(delete_form.submit, {'attr': {'class': 'btn btn-danger'}}) }}
+  </div>
+</div>
+
+{{ form_rest(delete_form) }}
+
+{{ form_end(delete_form) }}
+
+
 {% endblock %}

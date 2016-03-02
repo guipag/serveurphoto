@@ -1,0 +1,51 @@
+{% extends 'LTCoreBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h1>User</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('user') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('user_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+
+{{ form_start(delete_form, {'attr': {'class': 'form form-horizontal'}}) }}
+
+
+<div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+  <div class="btn-group" role="group">
+    <a href="{{ path('photograph') }}" class="btn btn-default">{{ 'Back to the list'|trans }}</a>
+  </div>
+  <div class="btn-group" role="group">
+    <a href="{{ path('user_edit', { 'id': entity.id }) }}" class="btn btn-primary">{{ 'Edit'|trans }}</a>
+  </div>
+  <div class="btn-group" role="group">
+{{ form_widget(delete_form.submit, {'attr': {'class': 'btn btn-danger'}}) }}
+  </div>
+</div>
+
+{{ form_rest(delete_form) }}
+
+{{ form_end(delete_form) }}
+
+
+
+
+{% endblock %}
