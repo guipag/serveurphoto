@@ -95,6 +95,13 @@ class Photograph
      */
     private $updated_at;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="locked", type="boolean", nullable=true)
+     */
+    private $locked = false;
+
     public function __construct() {
 	$this->events = new ArrayCollection();
     }
@@ -317,5 +324,15 @@ class Photograph
     public function getLicence()
     {
         return $this->licence;
+    }
+
+    public function isLocked() {
+	return $this->locked;
+    }
+
+    public function setLocked($lock) {
+	$this->locked = $lock;
+
+	return $this;
     }
 }

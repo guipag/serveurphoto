@@ -160,20 +160,25 @@ class UserController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
+	$userManager = $this->get('fos_user.user_manager');
+	$user = $userManager->findUserBy(array('id'=>$id));
 
-        $entity = $em->getRepository('LTUserBundle:User')->find($id);
-
-        if (!$entity) {
+        if (!$user) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($user);
+	$editForm->remove('password');
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-	    $em->persist($entity);
-            $em->flush();
+	    $data = $editForm->getData();
+
+	    $user->setUsername($data->getUsername());
+	    $user->setEmail($data->getEmail());
+	    $user->setRoles($data->getRoles());
+	    $userManager->updateUser($user);
 
             return $this->redirect($this->generateUrl('user_edit', array('id' => $id)));
         }
@@ -223,5 +228,19 @@ class UserController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    public function lockUserAction(User $user) {
+	$user->setLocked(true);
+	$this->get('fos_user.user_manager')->updateUser($user);
+
+	return $this->redirect($this->generateUrl('user_edit', array('id' => $user->getId())));
+    }
+
+    public function unlockUserAction(User $user) {
+	$user->setLocked(false);
+	$this->get('fos_user.user_manager')->updateUser($user);
+
+	return $this->redirect($this->generateUrl('user_edit', array('id' => $user->getId())));
     }
 }

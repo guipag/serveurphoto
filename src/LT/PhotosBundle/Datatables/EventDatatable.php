@@ -15,28 +15,9 @@ class EventDatatable extends AbstractDatatableView
     /**
      * {@inheritdoc}
      */
-    public function buildDatatable()
+    public function buildDatatable(array $options = Array())
     {
-        /*$this->topActions->set(array(
-            'start_html' => '<div class="row"><div class="col-sm-3">',
-            'end_html' => '<hr></div></div>',
-            'actions' => array(
-                array(
-                    'route' => $this->router->generate('post_new'),
-                    'label' => $this->translator->trans('datatables.actions.new'),
-                    'icon' => 'glyphicon glyphicon-plus',
-                    //'role' => 'ROLE_USER',
-                    'attributes' => array(
-                        'rel' => 'tooltip',
-                        'title' => $this->translator->trans('datatables.actions.new'),
-                        'class' => 'btn btn-primary',
-                        'role' => 'button'
-                    ),
-                )
-            )
-        ));*/
-
-        $this->features->setFeatures(array(
+        $this->features->set(array(
             'auto_width' => true,
             'defer_render' => false,
             'info' => false,
@@ -53,12 +34,12 @@ class EventDatatable extends AbstractDatatableView
             'delay' => 0
         ));
 
-        $this->ajax->setOptions(array(
+        $this->ajax->set(array(
             'url' => $this->router->generate('event_results'),
             'type' => 'GET'
         ));
 
-        $this->options->setOptions(array(
+        $this->options->set(array(
             'display_start' => 0,
             'defer_loading' => -1,
             'dom' => 'lfrtip',
@@ -73,7 +54,6 @@ class EventDatatable extends AbstractDatatableView
             'search_delay' => 0,
             'state_duration' => 7200,
             'stripe_classes' => array(),
-            'responsive' => true,
             'class' => Style::BOOTSTRAP_3_STYLE,
             'individual_filtering' => false,
             'individual_filtering_position' => 'foot',
@@ -83,8 +63,8 @@ class EventDatatable extends AbstractDatatableView
         $this->columnBuilder
                 ->add('id', 'column', array('title' => 'Id',))
                 ->add('name', 'column', array('title' => 'Nom',))
-                ->add('date', 'datetime', array('title' => 'Date début',))
-                ->add('dateFin', 'datetime', array('title' => 'Date fin',))
+                ->add('date', 'datetime', array('title' => 'Date de début',))
+                ->add('dateFin', 'datetime', array('title' => 'Date de fin',))
                 ;
     }
 

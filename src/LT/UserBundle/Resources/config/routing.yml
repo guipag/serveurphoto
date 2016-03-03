@@ -6,3 +6,8 @@ lt_user_search:
     path: user/search
     defaults: { _controller: "LTUserBundle:Ajax:userSearch" }
 
+lt_user_lock:
+    path: /user/lock/{id}
+    defaults: { _controller: "LTUserBundle:User:lockUser" }
+    requirements:
+        id: \d+

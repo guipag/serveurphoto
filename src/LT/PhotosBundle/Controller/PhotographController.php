@@ -292,4 +292,26 @@ class PhotographController extends Controller
             ->getForm()
         ;
     }
+
+    public function lockAction(Photograph $photograph) {
+	$em = $this->getDoctrine()->getManager();
+
+	$photograph->setLocked(true);
+
+	$em->persist($photograph);
+	$em->flush();
+
+	return $this->redirect($this->generateUrl('photograph_edit', array('id' => $photograph->getId())));
+    }
+
+    public function unlockAction(Photograph $photograph) {
+	$em = $this->getDoctrine()->getManager();
+
+	$photograph->setLocked(false);
+
+	$em->persist($photograph);
+	$em->flush();
+
+	return $this->redirect($this->generateUrl('photograph_edit', array('id' => $photograph->getId())));
+    }
 }

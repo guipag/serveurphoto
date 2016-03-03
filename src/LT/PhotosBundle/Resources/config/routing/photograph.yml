@@ -32,3 +32,17 @@ photograph_delete:
     path:     /{id}/delete
     defaults: { _controller: "LTPhotosBundle:Photograph:delete" }
     methods: [ POST, DELETE ]
+
+photograph_lock:
+    path: /{id}/lock
+    defaults: { _controller: "LTPhotosBundle:Photograph:lock" }
+    methods: [ get ]
+    requirements:
+        id: \d+
+
+photograph_unlock:
+    path: /{id}/unlock
+    defaults: { _controller: "LTPhotosBundle:Photograph:unlock" }
+    methods: [ get ]
+    requirements:
+        id: \d+

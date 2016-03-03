@@ -23,7 +23,7 @@ class AppKernel extends Kernel
 	    new FOS\UserBundle\FOSUserBundle(),
 	    new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 	    new Genemu\Bundle\FormBundle\GenemuFormBundle(),
-	    new PunkAve\FileUploaderBundle\PunkAveFileUploaderBundle(),
+	    //new PunkAve\FileUploaderBundle\PunkAveFileUploaderBundle(),
 	    new Liip\ImagineBundle\LiipImagineBundle(),
 	    new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
 	    new Oneup\UploaderBundle\OneupUploaderBundle(),

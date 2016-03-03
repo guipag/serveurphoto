@@ -1,0 +1,8 @@
+{% block checkbox_widget %}
+    {% spaceless %}
+        <label class="btn btn-primary{% if checked %} active{% endif %}">
+            <input type="checkbox" autocomplete="off" {{ block('widget_attributes') }} {% if checked %} checked="checked"{% endif %} />
+	    {{ value|trans({}, translation_domain) }}
+        </label>
+    {% endspaceless %}
+{% endblock %}

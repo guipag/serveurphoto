@@ -25,15 +25,16 @@ class UserType extends AbstractType
     				 'second_options' => array('label' => 'Mot de passe (validation)')))
 	    ->add('roles', 'choice', array(
                                  'choices'   => array(
-                                    'ROLE_ADMIN'       => 'ROLE_ADMIN',
-                                    'ROLE_USER'        => 'ROLE_USER',
-                                    'ROLE_PHOTOGRAPH'  => 'ROLE_PHOTOGRAPH',
-				    'ROLE_MODERATEUR'  => 'ROLE_MODERATEUR',
-				    'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN',
+                                    'ROLE_ADMIN'       => 'Administrateur',
+                                    'ROLE_USER'        => 'Utilisateur',
+                                    'ROLE_PHOTOGRAPH'  => 'Photographe',
+				    'ROLE_MODERATEUR'  => 'Modérateur',
+				    'ROLE_SUPER_ADMIN' => 'Super administrateur',
                                 ),
                                 'mapped'    => true,
 				'expanded'  => true,
-                                'multiple'  => true));
+                                'multiple'  => true,
+				'label'	    => false));
     }
 
     /**

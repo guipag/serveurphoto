@@ -8,9 +8,20 @@
   <div class="btn-group" role="group">
     <a href="{{ path('photograph') }}" class="btn btn-default">{{ 'Back to the list'|trans }}</a>
   </div>
+  {% if entity.user != null %}
   <div class="btn-group" role="group">
-    <a href="#" class="btn btn-primary">Modifier l'utilisateur associé</a>
+    <a href="{{ path('user_edit', {'id': entity.user.id}) }}" class="btn btn-primary">Modifier l'utilisateur associé</a>
   </div>
+  {% endif %}
+  {% if entity.locked == false %}
+    <div class="btn-group" role="group">
+      <a href="{{ path('photograph_lock', {'id': entity.id}) }}" class="btn btn-warning">Bloquer le photographe</a>
+    </div>
+  {% else %}
+    <div class="btn-group" role="group">
+      <a href="{{ path('photograph_unlock', {'id': entity.id}) }}" class="btn btn-primary">Débloquer le photographe</a>
+    </div>
+  {% endif %}
   <div class="btn-group" role="group">
 {{ form_widget(delete_form.submit, {'attr': {'class': 'btn btn-danger'}}) }}
   </div>
