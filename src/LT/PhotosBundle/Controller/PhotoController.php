@@ -125,12 +125,6 @@ class PhotoController extends Controller {
 	return $this->render('LTPhotosBundle:Default:valideImport.html.twig');
     }
 
-    public function helpAction() {
-        return $this->render('LTPhotosBundle:Default:help.html.twig');
-    }
-    public function deleteAction(Photo $photo) {
-    }
-
     public function censureAction(Photo $photo) {
 	$em = $this->getDoctrine()->getManager();
 	$photo->setCensured(true);
@@ -193,29 +187,5 @@ class PhotoController extends Controller {
                 'Content-Disposition' => 'attachment; filename="'.basename($name).'"',
                 'Content-Length: '.filesize($name)
               ));
-    }
-
-    public function tagSuggestAction(Request $request) {
-        $query = $request->get('search', null);
-
-        $index = $this->container->get('fos_elastica.index.lt_photos_index.tag');
-
-	$searchQuery = new \Elastica\Query\QueryString();
-	$searchQuery->setParam('query', $query);
-
-	$searchQuery->setDefaultOperator('AND');
-
-	$searchQuery->setParam('fields', array('tag'));
-
-	$results = $index->search($searchQuery, 10)->getResults();
-
-	$data = array();
-
-	foreach($results as $result) {
-	    $source = $result->getSource();
-	    $data[] = array('suggest' => $source['tag']);
-	}
-
-	return new JsonResponse($data, 200, array('Cache-Control' => 'no-cache'));
     }
 }

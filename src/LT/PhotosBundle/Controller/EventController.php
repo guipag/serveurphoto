@@ -81,21 +81,6 @@ class EventController extends Controller
     }
 
     /**
-     * Displays a form to create a new Event entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new Event();
-        $form   = $this->createCreateForm($entity);
-
-        return $this->render('LTPhotosBundle:Event:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
      * Finds and displays a Event entity.
      *
      */
@@ -190,10 +175,6 @@ class EventController extends Controller
 	    'nbrPhotosCensured' => $nbrPhotosCensured,
 	    'nbrPhotosToValidate' => $nbrPhotosToValidate,
         ));
-    }
-
-    public function deplaceAction(Request $request) {
-	return $this->redirect($this->generateUrl('event_index'));
     }
 
     /**
@@ -351,55 +332,7 @@ class EventController extends Controller
         return $resp;
     }
 
-    public function bulkDeleteAction(Request $request)
-    {
-        $isAjax = $request->isXmlHttpRequest();
-
-        if ($isAjax) {
-            $choices = $request->request->get("data");
-
-            $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository("LTPhotosBundle:Event");
-
-            foreach ($choices as $choice) {
-                $entity = $repository->find($choice["value"]);
-                $em->remove($entity);
-            }
-            $em->flush();
-
-           return new Response("Success", 200);
-        }
-        return new Response("Bad Request", 400);
-    }
-
-    public function bulkInvisibleAction(Request $request)
-    {
-        $isAjax = $request->isXmlHttpRequest();
-
-        if ($isAjax) {
-            $choices = $request->request->get("data");
-
-            $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository("LTPhotosBundle:Event");
-
-            foreach ($choices as $choice) {
-                $entity = $repository->find($choice["value"]);
-                $entity->setVisible(false);
-                $em->persist($entity);
-            }
-
-            $em->flush();
-
-            return new Response("Success", 200);
-        }
-
-        return new Response("Bad Request", 400);
-    }
-
     public function listAction(Request $request) {
-
-	/* TODO : s'il n'y a qu'un seul résultat venant d'une recherche de la barre d'adresse rediriger vers le bon event */
-
 	$eventSearch = new EventSearch();
 
         $eventSearchForm = $this->get('form.factory')
