@@ -35,7 +35,7 @@
 	"friendsofsymfony/elastica-bundle": "dev-master",
 	"jms/serializer-bundle": "1.1.x",
 	"components/jquery": "1.11.3",
-        "moment/moment": "2.10.2",
+        "moment/moment": "2.11.x",
         "friendsofsymfony/jsrouting-bundle": "@stable",
 	"sg/datatablesbundle": "0.10.x"
     },

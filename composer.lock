@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9ab55e340e01c1ad6e994144df9c0522",
-    "content-hash": "1109bcf464103cea50b1e4bda1a4db75",
+    "hash": "083db7850ee2eb1b3c954d5ca8fde377",
+    "content-hash": "1ebbd37f897eea5fc0b8a3cb70393831",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1068,12 +1068,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSElasticaBundle.git",
-                "reference": "1e3df90e92db524c70218ee3133b09ff7d4edd57"
+                "reference": "53362207b9c34470347ddc1b5eafc77b61d6cad8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSElasticaBundle/zipball/1e3df90e92db524c70218ee3133b09ff7d4edd57",
-                "reference": "1e3df90e92db524c70218ee3133b09ff7d4edd57",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSElasticaBundle/zipball/53362207b9c34470347ddc1b5eafc77b61d6cad8",
+                "reference": "53362207b9c34470347ddc1b5eafc77b61d6cad8",
                 "shasum": ""
             },
             "require": {
@@ -1143,7 +1143,7 @@
                 "propel",
                 "search"
             ],
-            "time": "2016-03-02 13:53:37"
+            "time": "2016-03-03 09:06:07"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -2305,16 +2305,16 @@
         },
         {
             "name": "moment/moment",
-            "version": "2.10.2",
+            "version": "2.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moment/moment.git",
-                "reference": "ce233cecf3d07aa15869a1db0fd8a8c43efccfcd"
+                "reference": "dd9cff0104c0dc3f114f54107397c59920e764cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moment/moment/zipball/ce233cecf3d07aa15869a1db0fd8a8c43efccfcd",
-                "reference": "ce233cecf3d07aa15869a1db0fd8a8c43efccfcd",
+                "url": "https://api.github.com/repos/moment/moment/zipball/dd9cff0104c0dc3f114f54107397c59920e764cc",
+                "reference": "dd9cff0104c0dc3f114f54107397c59920e764cc",
                 "shasum": ""
             },
             "require": {
@@ -2355,7 +2355,7 @@
                 "time",
                 "validate"
             ],
-            "time": "2015-04-09 06:31:25"
+            "time": "2016-02-03 22:43:05"
         },
         {
             "name": "monolog/monolog",
