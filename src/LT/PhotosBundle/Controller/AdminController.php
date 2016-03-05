@@ -24,4 +24,11 @@ class AdminController extends Controller {
 
         return $this->render('LTPhotosBundle:Admin:gallery.html.twig', array('photos' => $photos, 'photographs' => $event->getPhotographs()));
     }
+
+    public function miniGalleryAction(Event $event) {
+	$repo = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Photo');
+	$photos = $repo->getAllPhotos($event);
+
+	return $this->render('LTPhotosBundle:Admin:miniGallery.html.twig', array('photos' => $photos));
+    }
 }

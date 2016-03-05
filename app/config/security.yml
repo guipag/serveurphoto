@@ -37,7 +37,7 @@ security:
         - { path: ^/photograph/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/photograph/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/event/create, roles: ROLE_PHOTOGRAPH }
-        - { path: ^/admin, roles: ROLE_ADMIN }
+#        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/bulk/delete/event, roles: ROLE_ADMIN }
 
     acl:

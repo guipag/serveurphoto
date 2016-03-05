@@ -1,45 +1,29 @@
 {% extends 'LTCoreBundle::layout.html.twig' %}
 
+{% trans_default_domain 'SgDatatablesBundle' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="{{ asset('bundles/ltphotos/css/smoke.min.css') }}">
+{% endblock %}
+
 {% block body %}
 
-<div class="well">
-  <form id="form_recherche" action="{{ path('lt_photos_search_events') }}" method="post">
-    <div class="input-group">
-      <input type="text" class="form-control" id="user" name="user" placeholder="Rechercher...">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="submit">Go !</button>
-      </span>
-    </div>
-  </form>
 
-  <br />
+{{ datatable_render(datatable) }}
 
-  <div class="loading"></div>
-    <div id="resultats_recherche">
-      {% include 'LTUserBundle:User:listUser.html.twig' with {'entities' : entities}  %}
-    </div>
-  </div>
-</div>
+<button class="btn btn-primary">Nouveau</button>
 
 
-<script>
-$(".loading").hide();
-$("#form_recherche").submit(function(){
-    $(".loading").show();
-    var motcle = $("#user").val();
-    var DATA = 'motcle=' + motcle;
-    $.ajax({
-        type: "POST",
-        url: "/app_dev.php/admin/user/search",
-        data: DATA,
-        cache: false,
-        success: function(data){
-           $('#resultats_recherche').html(data);
-           $(".loading").hide();
-        }
-    });
-    return false;
-});
-</script>
+  <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+  <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+  <script src="{{ asset('bundles/LTPhotos/js/moment-with-locales.min.js') }}"></script>
+  <script src="{{ asset('bundles/ltphotos/js/smoke.min.js') }}"></script>
+  <script src="{{ asset('bundles/ltphotos/js/fr.min.js') }}"></script>
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/1.10.10/sorting/datetime-moment.js"></script>
 
 {% endblock %}

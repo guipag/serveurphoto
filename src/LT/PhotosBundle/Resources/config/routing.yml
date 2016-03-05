@@ -55,6 +55,13 @@ lt_photos_gallery_admin:
         year1: \d{4}
         year2: \d{4}
 
+lt_photos_minigallery:
+    path: /admin/mini-gallery/{id}
+    methods: [ get ]
+    defaults: { _controller:LTPhotosBundle:Admin:miniGallery }
+    options:
+        expose: true
+
 lt_photos_gallery:
     path: /{year1}-{year2}/{slug}/gallery/{photograph}
     methods: [ get ]
@@ -173,6 +180,11 @@ event_results:
     path: /results/event
     methods: [ get ]
     defaults: { _controller:LTPhotosBundle:Event:results }
+
+photograph_results:
+    path: /results/photograph
+    methods: [ get ]
+    defaults: { _controller:LTPhotosBundle:Photograph:results }
 
 event_bulk_delete:
     path: /bulk/delete/event

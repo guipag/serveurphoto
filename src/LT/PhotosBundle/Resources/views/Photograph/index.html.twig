@@ -1,37 +1,29 @@
 {% extends 'LTCoreBundle::layout.html.twig' %}
 
+{% trans_default_domain 'SgDatatablesBundle' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/ltphotos/css/smoke.min.css') }}">
+{% endblock %}
+
 {% block body -%}
     <h3>{{ 'Photographers list'|trans }}</h3>
 
-    <table class="table table-bordered table-striped table-condensed table-responsive">
-        <thead>
-            <tr>
-                <th>{{ 'Id'|trans }}</th>
-                <th>{{ 'Name'|trans }}</th>
-                <th>{{ 'Firstname'|trans }}</th>
-                <th>{{ 'Nickname'|trans }}</th>
-                <th>{{ 'Description'|trans }}</th>
-                <th>{{ 'Actions'|trans }}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('photograph_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.name }}</td>
-                <td>{{ entity.firstname }}</td>
-                <td>{{ entity.nickname }}</td>
-                <td>{{ entity.description }}</td>
-                <td>
-                  <a class="btn btn-primary" href="{{ path('photograph_edit', { 'id': entity.id }) }}">éditer</a>
-		{#{% if entity.user.username == true %}
-		  <a class="btn btn-danger" href="{{ path('lt_photos_index', { '_switch_user': entity.user.username }) }}">usurpation</a>
-		{% endif %}#}
-                </td>
-            </tr>
-        {% endfor %}
-	  <tr><td colspan="6"><a class="btn btn-success" href="{{ path('photograph_new') }}">Nouveau photographe</a></td></tr>
-        </tbody>
-    </table>
+<a class="btn btn-success" href="{{ path('photograph_new') }}">Nouveau photographe</a>
+{{ datatable_render(datatable) }}
+
+
+  <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+  <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+  <script src="{{ asset('bundles/LTPhotos/js/moment-with-locales.min.js') }}"></script>
+  <script src="{{ asset('bundles/ltphotos/js/smoke.min.js') }}"></script>
+  <script src="{{ asset('bundles/ltphotos/js/fr.min.js') }}"></script>
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/1.10.10/sorting/datetime-moment.js"></script>
+
 
 {% endblock %}

@@ -4,6 +4,7 @@ namespace LT\UserBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use LT\UserBundle\Entity\User;
 use LT\UserBundle\Form\UserType;
@@ -17,7 +18,7 @@ class UserController extends Controller
 
     /**
      * Lists all User entities.
-     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction()
     {
@@ -25,8 +26,13 @@ class UserController extends Controller
 
         $entities = $em->getRepository('LTUserBundle:User')->findAll();
 
+        $datatable = $this->get('app.datatable.user');
+        $datatable->buildDatatable();
+
+
         return $this->render('LTUserBundle:User:index.html.twig', array(
             'entities' => $entities,
+	    'datatable' => $datatable,
         ));
     }
     /**
@@ -89,7 +95,7 @@ class UserController extends Controller
 
     /**
      * Finds and displays a User entity.
-     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function showAction($id)
     {
@@ -115,6 +121,9 @@ class UserController extends Controller
      */
     public function editAction($id)
     {
+	if ($container->get('security.context')->getTocken()->getUser()->getPhotograph()->getId() != $id)
+	    $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('LTUserBundle:User')->find($id);
@@ -159,6 +168,9 @@ class UserController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        if ($container->get('security.context')->getTocken()->getUser()->getPhotograph()->getId() != $id)
+            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
         $em = $this->getDoctrine()->getManager();
 	$userManager = $this->get('fos_user.user_manager');
 	$user = $userManager->findUserBy(array('id'=>$id));
@@ -195,6 +207,9 @@ class UserController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        if ($container->get('security.context')->getTocken()->getUser()->getPhotograph()->getId() != $id)
+            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -230,6 +245,9 @@ class UserController extends Controller
         ;
     }
 
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function lockUserAction(User $user) {
 	$user->setLocked(true);
 	$this->get('fos_user.user_manager')->updateUser($user);
@@ -237,10 +255,30 @@ class UserController extends Controller
 	return $this->redirect($this->generateUrl('user_edit', array('id' => $user->getId())));
     }
 
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function unlockUserAction(User $user) {
 	$user->setLocked(false);
 	$this->get('fos_user.user_manager')->updateUser($user);
 
 	return $this->redirect($this->generateUrl('user_edit', array('id' => $user->getId())));
+    }
+
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function resultsAction()
+    {
+        $datatable = $this->get('app.datatable.user');
+        $datatable->buildDatatable();
+
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
+        $resp = $query->getResponse();
+
+        $logger = $this->get('logger');
+        $logger->info($resp);
+
+        return $resp;
     }
 }

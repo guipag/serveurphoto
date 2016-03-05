@@ -12,3 +12,8 @@ services:
         tags:
             - { name: form.type, alias: lt_user_registration }
 
+    app.datatable.user:
+        class: LT\UserBundle\Datatables\UserDatatable
+        tags:
+            - { name: sg.datatable.view }
+

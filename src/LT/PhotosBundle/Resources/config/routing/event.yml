@@ -7,6 +7,8 @@ event_show:
     path:     /{id}/show
     methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Event:show" }
+    options:
+        expose: true
 
 event_new:
     path:     /new
@@ -22,6 +24,8 @@ event_edit:
     path:     /{id}/edit
     methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Event:edit" }
+    options:
+        expose: true
 
 event_update:
     path:     /{id}/update

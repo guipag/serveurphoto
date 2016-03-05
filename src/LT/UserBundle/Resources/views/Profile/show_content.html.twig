@@ -51,6 +51,8 @@
     <td>{{ user.photograph.licence }}</td>
   </tr>
 </table>
+
+<a class="btn btn-warning" href="{{ path('photograph_edit',{'id': user.photograph.id}) }}">Modifier mon compte photographe</a>
 {% endif %}
 
 <h3>Changer mon mot de passe</h3>

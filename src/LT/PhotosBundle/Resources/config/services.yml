@@ -43,6 +43,16 @@ services:
         tags:
             - { name: sg.datatable.view }
 
+    app.datatable.event.admin:
+        class: LT\PhotosBundle\Datatables\EventAdminDatatable
+        tags:
+            - { name: sg.datatable.view }
+
+    app.datatable.photograph:
+        class: LT\PhotosBundle\Datatables\PhotographDatatable
+        tags:
+            - { name: sg.datatable.view }
+
     form.type.event_search:
         class: LT\PhotosBundle\Form\Type\EventSearchType
         tags:

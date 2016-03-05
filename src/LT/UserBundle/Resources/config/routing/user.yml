@@ -5,6 +5,8 @@ user:
 user_show:
     path:     /{id}/show
     defaults: { _controller: "LTUserBundle:User:show" }
+    options:
+        expose: true
 
 user_new:
     path:     /new
@@ -18,6 +20,8 @@ user_create:
 user_edit:
     path:     /{id}/edit
     defaults: { _controller: "LTUserBundle:User:edit" }
+    options:
+        expose: true
 
 user_update:
     path:     /{id}/update
@@ -44,3 +48,8 @@ lt_user_unlock:
     defaults: { _controller: "LTUserBundle:User:unlockUser" }
     requirements:
          id: \d+
+
+user_results:
+    path: /user/search
+    defaults: { _controller: "LTUserBundle:User:results" }
+    methods: [ get ]

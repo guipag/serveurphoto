@@ -32,8 +32,12 @@ class PhotographController extends Controller
 
         $entities = $em->getRepository('LTPhotosBundle:Photograph')->findAll();
 
+        $datatable = $this->get('app.datatable.photograph');
+        $datatable->buildDatatable();
+
         return $this->render('LTPhotosBundle:Photograph:index.html.twig', array(
             'entities' => $entities,
+	    'datatable' => $datatable
         ));
     }
     /**
@@ -313,5 +317,19 @@ class PhotographController extends Controller
 	$em->flush();
 
 	return $this->redirect($this->generateUrl('photograph_edit', array('id' => $photograph->getId())));
+    }
+
+    public function resultsAction()
+    {
+        $datatable = $this->get('app.datatable.photograph');
+        $datatable->buildDatatable();
+
+        $query = $this->get('sg_datatables.query')->getQueryFrom($datatable);
+        $resp = $query->getResponse();
+
+        $logger = $this->get('logger');
+        $logger->info($resp);
+
+        return $resp;
     }
 }

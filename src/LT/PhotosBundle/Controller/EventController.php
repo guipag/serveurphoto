@@ -5,6 +5,7 @@ namespace LT\PhotosBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use LT\PhotosBundle\Entity\Photo;
 use LT\PhotosBundle\Entity\Event;
@@ -22,21 +23,20 @@ class EventController extends Controller
 
     /**
      * Lists all Event entities.
-     *
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_PHOTOGRAPH') or has_role('ROLE_MODERATEUR')")
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('LTPhotosBundle:Event')->findAllDateDesc();
+	$datatable = $this->get('app.datatable.event.admin');
+	$datatable->buildDatatable();
 
         return $this->render('LTPhotosBundle:Event:index.html.twig', array(
-            'entities' => $entities,
+	    'datatable' => $datatable,
         ));
     }
     /**
      * Creates a new Event entity.
-     *
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_PHOTOGRAPH')")
      */
     public function createAction(Request $request)
     {
@@ -82,7 +82,7 @@ class EventController extends Controller
 
     /**
      * Finds and displays a Event entity.
-     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function showAction($id)
     {
@@ -104,7 +104,7 @@ class EventController extends Controller
 
     /**
      * Displays a form to edit an existing Event entity.
-     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction($id)
     {
@@ -197,7 +197,7 @@ class EventController extends Controller
     }
     /**
      * Edits an existing Event entity.
-     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function updateAction(Request $request, $id)
     {
@@ -227,7 +227,7 @@ class EventController extends Controller
     }
     /**
      * Deletes a Event entity.
-     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -266,6 +266,9 @@ class EventController extends Controller
         ;
     }
 
+    /**
+     * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_MODERATEUR')
+     */
     public function censureAction(Request $request, Event $event, Photograph $photograph) {
 	$em = $this->getDoctrine()->getManager();
 	$repository = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Photo');
@@ -292,6 +295,9 @@ class EventController extends Controller
 	return $this->redirect($this->generateUrl('event_edit', array('id' => $event->getId())));
     }
 
+    /**
+     * @Security("has_role('ROLE_ADMIN') and has_role('ROLE_MODERATEUR')")
+     */
     public function validAction(Request $request, Event $event, Photograph $photograph) {
 	$em = $this->getDoctrine()->getManager();
 	$repository = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Photo');
@@ -359,6 +365,9 @@ class EventController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function deletePhotosAction(Request $request, Event $event, Photograph $photograph) {
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Photo');

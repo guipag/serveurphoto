@@ -22,6 +22,8 @@ photograph_edit:
     path:     /{id}/edit
     methods: [ get ]
     defaults: { _controller: "LTPhotosBundle:Photograph:edit" }
+    options:
+        expose: true
 
 photograph_update:
     path:     /{id}/update
