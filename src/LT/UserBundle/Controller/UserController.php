@@ -171,8 +171,7 @@ class UserController extends Controller
         if ($this->container->get('security.context')->getToken()->getUser()->getPhotograph()->getId() != $id)
             $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
-	$userManager = $this->get('fos_user.user_manager');
-	$user = $userManager->findUserBy(array('id'=>$id));
+	$user = $this->get('fos_user.user_manager')->findUserBy(array('id'=>$id));
 
         if (!$user) {
             throw $this->createNotFoundException('Unable to find User entity.');
@@ -189,12 +188,16 @@ class UserController extends Controller
 	    $user->setUsername($data->getUsername());
 	    $user->setEmail($data->getEmail());
 	    $user->setRoles($data->getRoles());
-	    $userManager->updateUser($user);
+	    $this->get('fos_user.user_manager')->updateUser($user);
 
             return $this->redirect($this->generateUrl('user_edit', array('id' => $id)));
         }
 
-        return $this->render('LTUserBundle:User:edit.html.twig', array('entity' => $entity, 'edit_form'   => $editForm->createView(), 'delete_form' => $deleteForm->createView()));
+        return $this->render('LTUserBundle:User:edit.html.twig', array(
+			'entity' => $entity,
+			'edit_form'   => $editForm->createView(),
+			'delete_form' => $deleteForm->createView()
+		));
     }
     /**
      * Deletes a User entity.
