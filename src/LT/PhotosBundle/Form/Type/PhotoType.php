@@ -1,29 +1,22 @@
 <?php
 
-namespace LT\PhotosBundle\Form;
+namespace LT\PhotosBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use LT\UserBundle\Form\Type\RegistrationFormType;
 
-class PhotographType extends AbstractType
+class PhotoType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('firstname')
-            ->add('nickname')
-            ->add('description')
-	    ->add('licence')
-	    ->add('user', new RegistrationFormType())
+	    ->add('file', 'file', array('attr' => array('multiple' => true)))
         ;
-	return $builder;
     }
 
     /**
@@ -32,7 +25,8 @@ class PhotographType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'LT\PhotosBundle\Entity\Photograph'
+            'data_class' => 'LT\PhotosBundle\Entity\Photo',
+            'attr' => ['id' => 'photoform']
         ));
     }
 
@@ -41,6 +35,6 @@ class PhotographType extends AbstractType
      */
     public function getName()
     {
-        return 'lt_photosbundle_photograph';
+        return 'lt_photosbundle_photo';
     }
 }

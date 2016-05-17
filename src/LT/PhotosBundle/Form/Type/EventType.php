@@ -1,12 +1,12 @@
 <?php
 
-namespace LT\PhotosBundle\Form;
+namespace LT\PhotosBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CategoryType extends AbstractType
+class EventType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -16,16 +16,18 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('date', 'datePicker', array())
+	    ->add('dateFin', 'datePicker', array())
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'LT\PhotosBundle\Entity\Category'
+            'data_class' => 'LT\PhotosBundle\Entity\Event'
         ));
     }
 
@@ -34,6 +36,6 @@ class CategoryType extends AbstractType
      */
     public function getName()
     {
-        return 'lt_photosbundle_category';
+        return 'lt_photosbundle_event';
     }
 }

@@ -1,32 +1,31 @@
 <?php
 
-namespace LT\PhotosBundle\Form;
+namespace LT\PhotosBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PhotoType extends AbstractType
+class CategoryType extends AbstractType
 {
-    /**
+        /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-	    ->add('file', 'file', array('attr' => array('multiple' => true)))
+            ->add('name')
         ;
     }
-
+    
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'LT\PhotosBundle\Entity\Photo',
-            'attr' => ['id' => 'photoform']
+            'data_class' => 'LT\PhotosBundle\Entity\Category'
         ));
     }
 
@@ -35,6 +34,6 @@ class PhotoType extends AbstractType
      */
     public function getName()
     {
-        return 'lt_photosbundle_photo';
+        return 'lt_photosbundle_category';
     }
 }

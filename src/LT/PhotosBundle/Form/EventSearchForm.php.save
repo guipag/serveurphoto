@@ -1,5 +1,0 @@
-<?php
-
-namespace LT\PhotosBundle\Form;
-
-use Symfony\Component

@@ -1,6 +1,6 @@
 <?php
 
-namespace LT\PhotosBundle\Form;
+namespace LT\PhotosBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

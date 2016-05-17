@@ -1,12 +1,13 @@
 <?php
 
-namespace LT\PhotosBundle\Form;
+namespace LT\PhotosBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use LT\UserBundle\Form\Type\RegistrationFormType;
 
-class EventType extends AbstractType
+class PhotographType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -16,9 +17,13 @@ class EventType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('date', 'datePicker', array())
-	    ->add('dateFin', 'datePicker', array())
+            ->add('firstname')
+            ->add('nickname')
+            ->add('description')
+	    ->add('licence')
+	    ->add('user', new RegistrationFormType())
         ;
+	return $builder;
     }
 
     /**
@@ -27,7 +32,7 @@ class EventType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'LT\PhotosBundle\Entity\Event'
+            'data_class' => 'LT\PhotosBundle\Entity\Photograph'
         ));
     }
 
@@ -36,6 +41,6 @@ class EventType extends AbstractType
      */
     public function getName()
     {
-        return 'lt_photosbundle_event';
+        return 'lt_photosbundle_photograph';
     }
 }
