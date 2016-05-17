@@ -11,7 +11,7 @@
 
 {% block body -%}
 
-<h3>Modifier l'utilisateur</h3>
+<h3>{{ 'Modifier l\'utilisateur'|trans }}</h3>
 
 
 {{ form_start(delete_form, {'attr': {'class': 'form form-horizontal'}}) }}
@@ -22,16 +22,16 @@
   </div>
 {% if entity.photograph != null %}
   <div class="btn-group" role="group">
-    <a href="{{ path('photograph_show', {'id' : entity.photograph.id}) }}" class="btn btn-primary">Modifier le photographe associé</a>
+    <a href="{{ path('photograph_show', {'id' : entity.photograph.id}) }}" class="btn btn-primary">{{ 'Modify associated photographer'|trans }}</a>
   </div>
 {% endif %}
 {% if entity.locked %}
   <div class="btn-group" role="group">
-    <a href="{{ path('lt_user_unlock', {'id': entity.id}) }}" class="btn btn-primary">Déblocker le compte</a>
+    <a href="{{ path('lt_user_unlock', {'id': entity.id}) }}" class="btn btn-primary">{{ 'Unlock account'|trans }}</a>
   </div>
 {% else %}
   <div class="btn-group" role="group">
-    <a href="{{ path('lt_user_lock', {'id': entity.id}) }}" class="btn btn-warning">Suspendre le compte</a>
+    <a href="{{ path('lt_user_lock', {'id': entity.id}) }}" class="btn btn-warning">{{ 'Lock account'|trans }}</a>
   </div>
 {% endif %}
   <div class="btn-group" role="group">

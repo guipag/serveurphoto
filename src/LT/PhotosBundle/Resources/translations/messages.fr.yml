@@ -20,3 +20,12 @@ Mail: Mail
 Enabled: Activé
 Locked: Bloqué
 Roles: Rôles
+Email: Email
+Rights: Droits
+Administrator: Administrateur
+Moderator: Modérateur
+Photographer: Photographe
+'Super administrator': 'Super administrateur'
+'Modify associated photographer': 'Modifier le photographe associé'
+'Unlock account': 'Débloquer le compte'
+'Lock account': 'Bloquer le compte'

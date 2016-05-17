@@ -21,15 +21,15 @@ class UserType extends AbstractType
 				 'type' => 'password',
 				 'invalid_message' => 'Les mots de passe doivent correspondre',
     				 'options' => array('required' => true),
-    				 'first_options'  => array('label' => 'Mot de passe'),
-    				 'second_options' => array('label' => 'Mot de passe (validation)')))
+    				 'first_options'  => array('label' => 'Password'),
+    				 'second_options' => array('label' => 'Password (repeat)')))
 	    ->add('roles', 'choice', array(
                                  'choices'   => array(
-                                    'ROLE_ADMIN'       => 'Administrateur',
-                                    'ROLE_USER'        => 'Utilisateur',
-                                    'ROLE_PHOTOGRAPH'  => 'Photographe',
-				    'ROLE_MODERATEUR'  => 'Modérateur',
-				    'ROLE_SUPER_ADMIN' => 'Super administrateur',
+                                    'ROLE_ADMIN'       => 'Administrator',
+                                    'ROLE_USER'        => 'User',
+                                    'ROLE_PHOTOGRAPH'  => 'Photographer',
+				    'ROLE_MODERATEUR'  => 'Moderator',
+				    'ROLE_SUPER_ADMIN' => 'Super administrator',
                                 ),
                                 'mapped'    => true,
 				'expanded'  => true,

@@ -38,7 +38,7 @@
 {{ form_start(delete_form, {'attr':{'class': 'form form-horizontal'}}) }}
 <div class="btn btn-group btn-group-justified" role="group" aria-label="Justified button group">
   <div class="btn-group" role="group">
-    <a href="{{ path('event') }} class="btn btn-default">{{ 'Back to the list'|trans }}</a>
+    <a href="{{ path('event') }}" class="btn btn-default">{{ 'Back to the list'|trans }}</a>
   </div>
   <div class="btn-group" role="group">
     <a href="{{ path('event_edit', {'id': entity.id}) }}" class="btn btn-primary">{{ 'Edit'|trans }}</a>

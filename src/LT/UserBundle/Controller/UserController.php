@@ -121,7 +121,7 @@ class UserController extends Controller
      */
     public function editAction($id)
     {
-	if ($container->get('security.context')->getTocken()->getUser()->getPhotograph()->getId() != $id)
+	if ($this->container->get('security.context')->getToken()->getUser()->getPhotograph()->getId() != $id)
 	    $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
         $em = $this->getDoctrine()->getManager();
@@ -158,7 +158,7 @@ class UserController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
+        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -168,7 +168,7 @@ class UserController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        if ($container->get('security.context')->getTocken()->getUser()->getPhotograph()->getId() != $id)
+        if ($this->container->get('security.context')->getToken()->getUser()->getPhotograph()->getId() != $id)
             $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
         $em = $this->getDoctrine()->getManager();
