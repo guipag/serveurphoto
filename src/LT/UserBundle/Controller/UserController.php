@@ -194,11 +194,7 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('user_edit', array('id' => $id)));
         }
 
-        return $this->render('LTUserBundle:User:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('LTUserBundle:User:edit.html.twig', array('entity' => $entity, 'edit_form'   => $editForm->createView(), 'delete_form' => $deleteForm->createView()));
     }
     /**
      * Deletes a User entity.
