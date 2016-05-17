@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use LT\UserBundle\Entity\User;
 use LT\PhotosBundle\Entity\Photograph;
-use LT\PhotosBundle\Form\Type\PhotographType;
+use LT\PhotosBundle\Form\PhotographType;
 
 /**
  * Controller managing the user profile
@@ -43,6 +43,7 @@ class ProfileController extends Controller
         }
 	//créer un formulaire pour créer et lier un compte photographe
 	$photograph = new Photograph();
+	$photograph->setUser($user);
 
 	$form = $this->get('form.factory')->create(new PhotographType(), $photograph);
 	$form->remove('user');
