@@ -171,7 +171,6 @@ class UserController extends Controller
         if ($this->container->get('security.context')->getToken()->getUser()->getPhotograph()->getId() != $id)
             $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
-        $em = $this->getDoctrine()->getManager();
 	$userManager = $this->get('fos_user.user_manager');
 	$user = $userManager->findUserBy(array('id'=>$id));
 

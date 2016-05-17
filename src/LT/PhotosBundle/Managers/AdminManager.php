@@ -14,8 +14,6 @@ class AdminManager {
   }
 
   public function asPhotosToValidate(Event $event) {
-    $nbrPhotosToValidate = array();
-
     $repository = $this->em->getRepository('LTPhotosBundle:Photo');
 
     $nbrPhotoToValidate = $repository->createQueryBuilder('a')
