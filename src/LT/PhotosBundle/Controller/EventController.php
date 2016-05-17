@@ -40,7 +40,13 @@ class EventController extends Controller
     public function createAction(Request $request)
     {
         $entity = new Event();
-        $form = $this->createCreateForm($entity);
+	$form = $this->createForm(new EventType(), $entity, array(
+            'action' => $this->generateUrl('event_create'),
+            'method' => 'POST',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -58,25 +64,6 @@ class EventController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
-    }
-
-    /**
-     * Creates a form to create a Event entity.
-     *
-     * @param Event $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Event $entity)
-    {
-        $form = $this->createForm(new EventType(), $entity, array(
-            'action' => $this->generateUrl('event_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
     }
 
     /**
