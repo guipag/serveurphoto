@@ -37,7 +37,9 @@
 	"components/jquery": "1.11.3",
         "moment/moment": "2.11.x",
         "friendsofsymfony/jsrouting-bundle": "@stable",
-	"sg/datatablesbundle": "0.10.x"
+	"sg/datatablesbundle": "0.10.x",
+        "sonata-project/admin-bundle": "^2.3",
+        "sonata-project/doctrine-orm-admin-bundle": "^2.3"
     },
     "scripts": {
         "post-root-package-install": [

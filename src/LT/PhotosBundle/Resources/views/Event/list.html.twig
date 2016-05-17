@@ -45,7 +45,7 @@
     <div class="col-sm-6 col-md-3">
       <a href="{{ path('lt_photos_base') ~ scolarYear(event.date) ~ '/' ~ event.slug }}">
         <div class="thumbnail">
-          <img src="{{ asset(cover(event).getWebPath | imagine_filter('front_thumb')) }}" style="height: 180px; width: 100%; display:block;">
+          <img src="{{ asset(cover(event).getWebPath ?? 'http://placehold.it/350x150' | imagine_filter('front_thumb')) }}" style="height: 180px; width: 100%; display:block;">
           <div class="caption">
             <h4>{{ event.name }}</h4>
             <p>{{ event.date|date('d-m-Y') }}</p>

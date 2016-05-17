@@ -1,0 +1,11 @@
+services:
+    sonata.admin.event:
+        class: LT\PhotosBundle\Admin\EventAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Event" }
+        arguments:
+            - ~
+            - LT\PhotosBundle\Entity\Event
+            - ~
+        calls:
+            - [ setTranslationDomain, [LTPhotosBundle]]

@@ -298,7 +298,7 @@ class EventController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN') and has_role('ROLE_MODERATEUR')")
      */
-    public function validAction(Request $request, Event $event, Photograph $photograph) {
+    public function validAction(Request $request, Event $event, Photograph $photograph, $email) {
 	$em = $this->getDoctrine()->getManager();
 	$repository = $this->getDoctrine()->getManager()->getRepository('LTPhotosBundle:Photo');
 
@@ -320,6 +320,17 @@ class EventController extends Controller
         }
 
         $em->flush();
+
+	if ($email) {
+	    //envoyer un mail
+	    $message = \Swift_Message::newInstance()
+		->setSubject('Nouvelles photos mises en lignes !')
+		->setFrom('photos@crans.org')
+		->setTo('guipag@gmail.com')
+		->setBody($this->renderView('LTPhotosBundle::email.html.twig', array('event' => $event, 'photograph' => $photograph)),'text/html');
+
+	    $this->get('mailer')->send($message);
+	}
         //rediriger vers la page d'édition de l'event
         return $this->redirect($this->generateUrl('event_edit', array('id' => $event->getId())));
     }

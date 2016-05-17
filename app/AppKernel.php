@@ -34,7 +34,11 @@ class AppKernel extends Kernel
 	    new FOS\ElasticaBundle\FOSElasticaBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
 	    new Sg\DatatablesBundle\SgDatatablesBundle(),
-	    new FOS\JsRoutingBundle\FOSJsRoutingBundle()
+	    new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+    <title>Nouvelles photos mises en ligne !</title>
+    <meta name="veiwport" content="width=device-width, initial-scale=1.0" />
+  </head>
+
+  <body>
+    <p>Salut,</p>
+
+    <p>De nouvelles photos viennent d'être mises en ligne par {{ photograph.nickname }} dans {{ event.name }}. Pour visualiser les photos tu peux te rendre sur le serveur photos ou suivre le lien suivant : <a href="{{ 'http://photos.guipag.fr' ~ path('lt_photos_base') ~ scolarYear(event.date) ~ '/' ~ event.slug }}">{{ 'http://photos.guipag.fr' ~ path('lt_photos_base') ~ scolarYear(event.date) ~ '/' ~ event.slug }}</a>
+
+    <p>A très bientôt,</p>
+    <p>L'équipe du serveur photos</p>
+  </body>
+</html>

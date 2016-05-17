@@ -89,11 +89,13 @@
       <td>{{ nbrPhotosCensured[photograph.nickname] }}</td>
       <td>{{ nbrPhotosToValidate[photograph.nickname] }}</td>
       <td>
-	<a class="btn btn-primary" href="{{ path('lt_photos_base') ~ 'admin/' ~ scolarYear(entity.date) ~ '/' ~ entity.slug ~ '/gallery#' ~ photograph.id }}">voir</a>
-	<a class="btn btn-success" href="{{ path('event_valid', {'id': entity.id, 'photograph': photograph.id}) }}">valider</a>
-	<a class="btn btn-warning" href="{{ path('event_censure', {'id': entity.id, 'photograph': photograph.id}) }}">censurer</a>
-	<a class="btn btn-danger" href="{{ path('event_delete_photos', {'id': entity.id, 'photograph': photograph.id}) }}">supprimer</a>
-        <a class="btn btn-primary" href="#">déplacer</a>
+        <div class="btn-group">
+	  <a role="button" class="btn btn-primary" href="{{ path('lt_photos_base') ~ 'admin/' ~ scolarYear(entity.date) ~ '/' ~ entity.slug ~ '/gallery#' ~ photograph.id }}"><i class="glyphicon glyphicon-eye-open"></i></a>
+	  <a role="button" class="btn btn-success" href="{{ path('event_valid', {'id': entity.id, 'photograph': photograph.id}) }}"><i class="glyphicon glyphicon-ok"></i></a>
+          <a class="btn btn-success" href="{{ path('event_valid', {'id': entity.id, 'photograph': photograph.id, 'email': true}) }}"><i class="glyphicon glyphicon-envelope"></i></a>
+	  <a class="btn btn-warning" href="{{ path('event_censure', {'id': entity.id, 'photograph': photograph.id}) }}"><i class="glyphicon glyphicon-eye-close"></i></a>
+	  <a class="btn btn-danger" href="{{ path('event_delete_photos', {'id': entity.id, 'photograph': photograph.id}) }}"><i class="glyphicon glyphicon-remove"></i></a>
+        </div>
       </td>
     </tr>
   {% endfor %}

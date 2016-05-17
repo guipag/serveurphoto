@@ -53,7 +53,7 @@ event_delete_photos:
     defaults: { _controller: "LTPhotosBundle:Event:deletePhotos" }
 
 event_valid:
-    path: /{id}/valid/{photograph}
+    path: /{id}/valid/{photograph}/{email}
     methods: [ get, post ]
-    defaults: { _controller:"LTPhotosBundle:Event:valid" }
+    defaults: { _controller:"LTPhotosBundle:Event:valid", email:false }
 
