@@ -45,8 +45,6 @@ class EventRepository extends Repository
 
         $filtered = new \Elastica\Query\Filtered($baseQuery, $boolFilter);
 
-        //$query = \Elastica\Query::create($filtered);
-
         return $this->find($filtered);
     }
 }

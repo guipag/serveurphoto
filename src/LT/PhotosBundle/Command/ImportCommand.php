@@ -42,7 +42,6 @@ class ImportCommand extends ContainerAwareCommand {
 	$progress->start($output, count($finder));
 
 	foreach ($finder as $file) {
-//$output->writeln($file->getRelativePathName());
 	    $textdate = preg_replace('#^(\d{4}) (\d{2}) (\d{2})(.+)$#isU', '$1 $2 $3', $file->getRelativePathName());
 	    $date = \DateTime::createFromFormat('Y m d', $textdate);
 

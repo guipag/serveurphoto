@@ -8,10 +8,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class EventSearchType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    /*$builder->add('name', null, array('required' => false))
-	    ->add('dateFrom', 'datePicker', array('required' => false))
-	    ->add('dateTo', 'datePicker', array('required' => false))
-	    ->add('search', 'submit');*/
     $builder->add('name', null, array('required' => false))
             ->add('dateFrom', 'datePicker', array('required' => false))
             ->add('dateTo', 'datePicker', array('required' => false))
