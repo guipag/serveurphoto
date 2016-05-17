@@ -7,8 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use LT\PhotosBundle\Entity\Photograph;
-use LT\PhotosBundle\Form\PhotographType;
-use LT\PhotosBundle\Form\PhotographEditType;
+use LT\PhotosBundle\Form\Type\PhotographType;
+use LT\PhotosBundle\Form\Type\PhotographEditType;
 
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;

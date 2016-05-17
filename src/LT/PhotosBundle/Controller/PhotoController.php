@@ -10,7 +10,7 @@ use LT\PhotosBundle\Entity\Event;
 use LT\PhotosBundle\Entity\Photograph;
 use LT\PhotosBundle\Entity\Category;
 use LT\PhotosBundle\Entity\Tag;
-use LT\PhotosBundle\Form\EventType;
+use LT\PhotosBundle\Form\Type\EventType;
 use LT\PhotosBundle\NotifMail\NotifMailEvents;
 use LT\PhotosBundle\NotifMail\PhotosPostEvent;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;

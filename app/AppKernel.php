@@ -24,7 +24,6 @@ class AppKernel extends Kernel
 	    new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 	    new Genemu\Bundle\FormBundle\GenemuFormBundle(),
 	    new Liip\ImagineBundle\LiipImagineBundle(),
-	    new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
 	    new Oneup\UploaderBundle\OneupUploaderBundle(),
             new LT\CoreBundle\LTCoreBundle(),
 	    new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),

@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use LT\PhotosBundle\Entity\Photo;
 use LT\PhotosBundle\Entity\Event;
 use LT\PhotosBundle\Entity\Photograph;
-use LT\PhotosBundle\Form\EventType;
+use LT\PhotosBundle\Form\Type\EventType;
 
 use LT\PhotosBundle\Model\EventSearch;
 
