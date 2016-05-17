@@ -16,7 +16,6 @@ use LT\PhotosBundle\NotifMail\PhotosPostEvent;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PhotoController extends Controller {
     public function uploadAction(Request $request) {

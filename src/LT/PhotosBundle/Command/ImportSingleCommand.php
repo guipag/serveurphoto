@@ -5,16 +5,12 @@ namespace LT\PhotosBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-use LT\PhotosBundle\Entity\Event;
-use LT\PhotosBundle\Entity\Photograph;
 use LT\PhotosBundle\Entity\Photo;
-use LT\PhotosBundle\Entity\Category;
 
 class ImportSingleCommand extends ContainerAwareCommand {
     protected function configure() {

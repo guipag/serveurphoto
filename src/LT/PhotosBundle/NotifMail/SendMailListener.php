@@ -3,10 +3,6 @@
 
 namespace LT\PhotosBundle\NotifMail;
 
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use LT\PhotosBundle\NotifMail\PhotosPostEvent;
 
 class SendMailListener
